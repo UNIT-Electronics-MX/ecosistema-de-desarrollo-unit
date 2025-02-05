@@ -1,0 +1,736 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Arduino IDE &#8212; documentación de Introducción al Ecosistema de Desarrollo UNIT  - 0.0.1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=a5c4661c" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=0023b8e2"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=00122899"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/translations.js?v=efdbd0b9"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'duino';</script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Salidas digitales (GPIO)" href="blink.html" />
+    <link rel="prev" title="MicroPython" href="upython.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/Logo-UNIT_Web-04-800x182.png" class="logo__image only-light" alt="documentación de Introducción al Ecosistema de Desarrollo UNIT  - 0.0.1 - Home"/>
+    <script>document.write(`<img src="_static/Logo-UNIT_Web-04-800x182.png" class="logo__image only-dark" alt="documentación de Introducción al Ecosistema de Desarrollo UNIT  - 0.0.1 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Búsqueda</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenido</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="upython.html">MicroPython</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Arduino IDE</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="blink.html">Salidas digitales (GPIO)</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="adc.html">Conversión de Analógico a Digital</a></li>
+<li class="toctree-l1"><a class="reference internal" href="report.html">Cómo Generar un Informe de Error</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/UNIT-Electronics/DualMCU-ONE" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Repositorio de origen"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/UNIT-Electronics/DualMCU-ONE/edit/main/docs/duino.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/UNIT-Electronics/DualMCU-ONE/issues/new?title=Issue%20on%20page%20%2Fduino.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Abrir un problema"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/duino.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="claro/oscuro" aria-label="claro/oscuro" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Arduino IDE</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Arduino IDE</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#historia">Historia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-principales">Características Principales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diferencias-clave-entre-arduino-y-un-entorno-nativo">Diferencias Clave entre Arduino y un Entorno Nativo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#capa-de-abstraccion">Capa de Abstracción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compilador-y-toolchain">Compilador y Toolchain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#portabilidad-y-optimizacion">Portabilidad y Optimización</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#soporte-para-multitarea-y-rtos">Soporte para Multitarea y RTOS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casos-de-uso">Casos de Uso</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-de-paquetes-de-unit-electronics">Guía de Instalación de Paquetes de Unit Electronics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisitos">Prerequisitos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-rapida">Instalación Rápida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-del-paquete-de-placa-dualmcu-one">1. Instalación del Paquete de Placa DualMCU-ONE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-del-paquete-de-placa-cocket-nova-ch552">2. Instalación del Paquete de Placa Cocket Nova CH552</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="arduino-ide">
+<h1>Arduino IDE<a class="headerlink" href="#arduino-ide" title="Link to this heading">#</a></h1>
+<section id="historia">
+<h2>Historia<a class="headerlink" href="#historia" title="Link to this heading">#</a></h2>
+<p>El <strong>Arduino Integrated Development Environment (IDE)</strong> fue desarrollado para proporcionar una plataforma accesible y fácil de usar para programar placas Arduino y otros microcontroladores compatibles. Su primera versión se lanzó en 2005 junto con la primera placa Arduino, con el objetivo de democratizar el acceso a la programación de hardware para estudiantes, artistas y desarrolladores de todas las áreas.</p>
+<p>A lo largo de los años, el IDE ha evolucionado, incorporando soporte para una amplia gama de microcontroladores y arquitecturas, desde los clásicos <strong>ATmega328P</strong> hasta plataformas avanzadas como <strong>ESP32</strong> y <strong>RP2040</strong>. Actualmente, existen dos versiones principales:</p>
+<ul class="simple">
+<li><p><strong>Arduino IDE 1.x</strong>: Una versión clásica basada en Java, con una interfaz sencilla y un sistema de compilación estable.</p></li>
+<li><p><strong>Arduino IDE 2.x</strong>: Una versión moderna basada en Electron, con funciones avanzadas como autocompletado, depuración en vivo y una mejor experiencia de usuario.</p></li>
+</ul>
+<p>El ecosistema de <strong>Arduino IDE</strong> ha sido clave para el desarrollo de proyectos de electrónica y robótica debido a su facilidad de uso y compatibilidad con múltiples plataformas.</p>
+</section>
+<section id="caracteristicas-principales">
+<h2>Características Principales<a class="headerlink" href="#caracteristicas-principales" title="Link to this heading">#</a></h2>
+<p>Arduino IDE se distingue por las siguientes características:</p>
+<ul class="simple">
+<li><p><strong>Interfaz Intuitiva</strong>: Diseñada para facilitar la programación con una curva de aprendizaje baja.</p></li>
+<li><p><strong>Compatibilidad Multiplataforma</strong>: Funciona en Windows, macOS y Linux.</p></li>
+<li><p><strong>Bibliotecas Integradas</strong>: Permite el uso de cientos de bibliotecas para sensores, motores, comunicación inalámbrica, etc.</p></li>
+<li><p><strong>Gestor de Placas</strong>: Soporte para agregar tarjetas adicionales como ESP32, STM32 y RP2040 mediante el <strong>Board Manager</strong>.</p></li>
+<li><p><strong>Compilador Simplificado</strong>: Usa un preprocesador que oculta detalles avanzados de C++, como la declaración de prototipos de funciones.</p></li>
+<li><p><strong>Monitor Serie</strong>: Herramienta integrada para depuración de datos en serie.</p></li>
+</ul>
+</section>
+<section id="diferencias-clave-entre-arduino-y-un-entorno-nativo">
+<h2>Diferencias Clave entre Arduino y un Entorno Nativo<a class="headerlink" href="#diferencias-clave-entre-arduino-y-un-entorno-nativo" title="Link to this heading">#</a></h2>
+<section id="capa-de-abstraccion">
+<h3>Capa de Abstracción<a class="headerlink" href="#capa-de-abstraccion" title="Link to this heading">#</a></h3>
+<p>Arduino proporciona una capa de abstracción que facilita la programación de microcontroladores mediante funciones de alto nivel:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pinMode</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="n">digitalWrite</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="n">delay</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Los entornos nativos requieren configurar registros directamente, permitiendo un control más preciso sobre el hardware pero con mayor complejidad:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">DDRB</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">PB5</span><span class="p">);</span><span class="w">  </span><span class="c1">// Configura PB5 como salida</span>
+<span class="n">PORTB</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">PB5</span><span class="p">);</span><span class="w"> </span><span class="c1">// Activa la salida</span>
+</pre></div>
+</div>
+</section>
+<section id="compilador-y-toolchain">
+<h3>Compilador y Toolchain<a class="headerlink" href="#compilador-y-toolchain" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Arduino</strong> utiliza un <strong>preprocesador</strong> especial que maneja automáticamente detalles como la declaración de funciones.</p></li>
+<li><p><strong>Entornos nativos</strong> como <strong>ESP-IDF</strong> y <strong>Pico-SDK</strong> utilizan compiladores como <strong>GCC</strong> o <strong>Clang</strong>, que permiten una mayor optimización del código.</p></li>
+</ul>
+</section>
+<section id="portabilidad-y-optimizacion">
+<h3>Portabilidad y Optimización<a class="headerlink" href="#portabilidad-y-optimizacion" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-number">Tabla 1 </span><span class="caption-text">Comparación de Portabilidad y Optimización</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p><strong>Característica</strong></p></th>
+<th class="head"><p><strong>Arduino IDE</strong></p></th>
+<th class="head"><p><strong>Entornos Nativos</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Portabilidad</p></td>
+<td><p>Alto: el mismo código funciona en varias plataformas</p></td>
+<td><p>Baja: optimizado para hardware específico</p></td>
+</tr>
+<tr class="row-odd"><td><p>Rendimiento</p></td>
+<td><p>Moderado</p></td>
+<td><p>Alto: acceso directo al hardware</p></td>
+</tr>
+<tr class="row-even"><td><p>Consumo de memoria</p></td>
+<td><p>Mayor debido a capas de abstracción</p></td>
+<td><p>Reducido: control total del código</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="soporte-para-multitarea-y-rtos">
+<h3>Soporte para Multitarea y RTOS<a class="headerlink" href="#soporte-para-multitarea-y-rtos" title="Link to this heading">#</a></h3>
+<p>Arduino no ofrece soporte nativo para <strong>sistemas operativos en tiempo real (RTOS)</strong>. Sin embargo, algunos fabricantes han extendido la funcionalidad de Arduino con soporte multitarea:</p>
+<ul class="simple">
+<li><p><strong>ESP-IDF</strong> (ESP32): Utiliza <strong>FreeRTOS</strong> para manejar múltiples tareas simultáneamente.</p></li>
+<li><p><strong>Pico-SDK</strong> (RP2040): Permite gestionar tareas en <strong>núcleos separados</strong>, logrando procesamiento paralelo.</p></li>
+</ul>
+</section>
+</section>
+<section id="casos-de-uso">
+<h2>Casos de Uso<a class="headerlink" href="#casos-de-uso" title="Link to this heading">#</a></h2>
+<p>Arduino IDE es ampliamente utilizado en diversos ámbitos:</p>
+<ul class="simple">
+<li><p><strong>Educación</strong>: Ideal para enseñanza de programación y electrónica.</p></li>
+<li><p><strong>Prototipado Rápido</strong>: Desarrollo rápido de pruebas con sensores y actuadores.</p></li>
+<li><p><strong>IoT y Domótica</strong>: Control de dispositivos conectados mediante Wi-Fi y Bluetooth.</p></li>
+<li><p><strong>Robótica</strong>: Programación de robots autónomos y sistemas embebidos.</p></li>
+</ul>
+<p>Gracias a su comunidad y ecosistema en crecimiento, <strong>Arduino IDE</strong> sigue siendo una herramienta fundamental para desarrolladores de hardware en todo el mundo.</p>
+</section>
+</section>
+<section id="guia-de-instalacion-de-paquetes-de-unit-electronics">
+<h1>Guía de Instalación de Paquetes de Unit Electronics<a class="headerlink" href="#guia-de-instalacion-de-paquetes-de-unit-electronics" title="Link to this heading">#</a></h1>
+<p>Esta guía proporciona instrucciones paso a paso para instalar los paquetes de soporte de placas necesarios para programar las placas de desarrollo <strong>DualMCU-ONE/DualMCU</strong> (RP2040 + ESP32) y <strong>Cocket Nova CH552</strong> utilizando el entorno Arduino IDE. Estos paquetes permiten el desarrollo en el entorno de Arduino, asegurando una integración fluida con el hardware.</p>
+<section id="prerequisitos">
+<h2>Prerequisitos<a class="headerlink" href="#prerequisitos" title="Link to this heading">#</a></h2>
+<p>Antes de continuar, asegúrate de tener instaladas las siguientes herramientas:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.arduino.cc/en/software">Arduino IDE</a> – Requerido para programar las placas.</p></li>
+<li><p><a class="reference external" href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers">Controladores USB</a> – Necesarios para la comunicación con las placas.</p></li>
+<li><p><strong>Paquetes de soporte de placas:</strong></p>
+<ul>
+<li><p><a class="reference external" href="https://uelectronics.com/producto/unit-dualmcu-one-esp32-rp2040/">DualMCU-ONE (ESP32 + RP2040</a></p></li>
+<li><p><a class="reference external" href="https://uelectronics.com/producto/unit-cocket-nova-ch552g-tarjeta-de-desarrollo/">Cocket Nova CH552</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="instalacion-rapida">
+<h2>Instalación Rápida<a class="headerlink" href="#instalacion-rapida" title="Link to this heading">#</a></h2>
+<p>Copia y pega las siguientes URLs en el campo <strong>URLs Adicionales del Gestor de Tarjetas</strong> en las preferencias del Arduino IDE:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>https://raw.githubusercontent.com/UNIT-Electronics/Uelectronics-ESP32-Arduino-Package/main/package_Uelectronics_esp32_index.json
+https://raw.githubusercontent.com/UNIT-Electronics/Uelectronics-RP2040-Arduino-Package/main/package_Uelectronics_rp2040_index.json
+https://raw.githubusercontent.com/UNIT-Electronics/Uelectronics-CH552-Arduino-Package/refs/heads/develop/package_duino_mcs51_index.json
+</pre></div>
+</div>
+<p>Luego, busca las placas <strong>Unit Electronics</strong> en el <strong>Gestor de Tarjetas</strong> e instala todos los paquetes necesarios.</p>
+<p>Si prefieres una instalación manual, sigue los pasos detallados a continuación.</p>
+</section>
+<section id="instalacion-del-paquete-de-placa-dualmcu-one">
+<h2>1. Instalación del Paquete de Placa DualMCU-ONE<a class="headerlink" href="#instalacion-del-paquete-de-placa-dualmcu-one" title="Link to this heading">#</a></h2>
+<p><strong>Paso 1: Instalar el Paquete ESP32</strong></p>
+<ol class="arabic">
+<li><p>Abre <strong>Arduino IDE</strong>.</p></li>
+<li><p>Ve a <strong>Archivo &gt; Preferencias</strong>.</p></li>
+<li><p>En el campo <strong>URLs Adicionales del Gestor de Tarjetas</strong>, ingresa la siguiente URL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">UNIT</span><span class="o">-</span><span class="n">Electronics</span><span class="o">/</span><span class="n">Uelectronics</span><span class="o">-</span><span class="n">ESP32</span><span class="o">-</span><span class="n">Arduino</span><span class="o">-</span><span class="n">Package</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">package_Uelectronics_esp32_index</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</li>
+<li><p>Haz clic en <strong>OK</strong> para guardar las preferencias.</p></li>
+<li><p>Ve a <strong>Herramientas &gt; Placa &gt; Gestor de Tarjetas</strong>.</p></li>
+<li><p>Busca <strong>DualMCU</strong>.</p></li>
+<li><p>Haz clic en <strong>Instalar</strong>.</p></li>
+<li><p>Una vez instalado, selecciona <strong>DualMCU</strong> en el menú <strong>Placas</strong>.</p></li>
+</ol>
+<p><strong>Paso 2: Instalar el Paquete RP2040</strong></p>
+<ol class="arabic">
+<li><p>Abre <strong>Arduino IDE</strong>.</p></li>
+<li><p>Ve a <strong>Archivo &gt; Preferencias</strong>.</p></li>
+<li><p>En el campo <strong>URLs Adicionales del Gestor de Tarjetas</strong>, ingresa la siguiente URL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">UNIT</span><span class="o">-</span><span class="n">Electronics</span><span class="o">/</span><span class="n">Uelectronics</span><span class="o">-</span><span class="n">RP2040</span><span class="o">-</span><span class="n">Arduino</span><span class="o">-</span><span class="n">Package</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">package_Uelectronics_rp2040_index</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</li>
+<li><p>Haz clic en <strong>OK</strong> para guardar las preferencias.</p></li>
+<li><p>Ve a <strong>Herramientas &gt; Placa &gt; Gestor de Tarjetas</strong>.</p></li>
+<li><p>Busca <strong>RP2040</strong>.</p></li>
+<li><p>Haz clic en <strong>Instalar</strong>.</p></li>
+<li><p>Una vez instalado, selecciona <strong>RP2040</strong> en el menú <strong>Placas</strong>.</p></li>
+</ol>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="https://raw.githubusercontent.com/Rabadan-uelectronics/DualMCU-RP2040-Arduino-Package/refs/heads/main/releases/download/0.0.0/BoardsManager.png"><img alt="https://raw.githubusercontent.com/Rabadan-uelectronics/DualMCU-RP2040-Arduino-Package/refs/heads/main/releases/download/0.0.0/BoardsManager.png" src="https://raw.githubusercontent.com/Rabadan-uelectronics/DualMCU-RP2040-Arduino-Package/refs/heads/main/releases/download/0.0.0/BoardsManager.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 1 </span><span class="caption-text">Ejemplo de instalación en el Gestor de Tarjetas.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="instalacion-del-paquete-de-placa-cocket-nova-ch552">
+<h2>2. Instalación del Paquete de Placa Cocket Nova CH552<a class="headerlink" href="#instalacion-del-paquete-de-placa-cocket-nova-ch552" title="Link to this heading">#</a></h2>
+<p>Para programar la placa <strong>Cocket Nova CH552</strong> utilizando Arduino IDE, sigue estos pasos:</p>
+<ol class="arabic">
+<li><p>Abre <strong>Arduino IDE</strong>.</p></li>
+<li><p>Ve a <strong>Archivo &gt; Preferencias</strong>.</p></li>
+<li><p>En el campo <strong>URLs Adicionales del Gestor de Tarjetas</strong>, ingresa la siguiente URL:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">UNIT</span><span class="o">-</span><span class="n">Electronics</span><span class="o">/</span><span class="n">Uelectronics</span><span class="o">-</span><span class="n">CH552</span><span class="o">-</span><span class="n">Arduino</span><span class="o">-</span><span class="n">Package</span><span class="o">/</span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">develop</span><span class="o">/</span><span class="n">package_duino_mcs51_index</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</li>
+<li><p>Haz clic en <strong>OK</strong> para guardar las preferencias.</p></li>
+<li><p>Ve a <strong>Herramientas &gt; Placa &gt; Gestor de Tarjetas</strong>.</p></li>
+<li><p>Busca <strong>Cocket Nova</strong>.</p></li>
+<li><p>Haz clic en <strong>Instalar</strong>.</p></li>
+<li><p>Una vez instalado, selecciona <strong>Cocket Nova</strong> en el menú <strong>Placas</strong>.</p></li>
+</ol>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="https://raw.githubusercontent.com/UNIT-Electronics/Uelectronics-CH552-Arduino-Package/refs/heads/main/images/board_json.png"><img alt="https://raw.githubusercontent.com/UNIT-Electronics/Uelectronics-CH552-Arduino-Package/refs/heads/main/images/board_json.png" src="https://raw.githubusercontent.com/UNIT-Electronics/Uelectronics-CH552-Arduino-Package/refs/heads/main/images/board_json.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 2 </span><span class="caption-text">Ejemplo de instalación en el Gestor de Tarjetas.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition tip">
+<p class="admonition-title">Truco</p>
+<p>Has instalado correctamente los paquetes necesarios para programar las placas de desarrollo <strong>DualMCU-ONE</strong> (ESP32 + RP2040) y <strong>Cocket Nova CH552</strong> en el Arduino IDE. ¡Ahora estás listo para comenzar a desarrollar tus proyectos!</p>
+</div>
+<p>Para documentación adicional e ideas de proyectos, visita <strong>[UNIT Electronics](https://uelectronics.com/)</strong>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="upython.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">MicroPython</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="blink.html"
+       title="siguiente página">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">Salidas digitales (GPIO)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Arduino IDE</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#historia">Historia</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-principales">Características Principales</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diferencias-clave-entre-arduino-y-un-entorno-nativo">Diferencias Clave entre Arduino y un Entorno Nativo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#capa-de-abstraccion">Capa de Abstracción</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compilador-y-toolchain">Compilador y Toolchain</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#portabilidad-y-optimizacion">Portabilidad y Optimización</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#soporte-para-multitarea-y-rtos">Soporte para Multitarea y RTOS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casos-de-uso">Casos de Uso</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-de-paquetes-de-unit-electronics">Guía de Instalación de Paquetes de Unit Electronics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisitos">Prerequisitos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-rapida">Instalación Rápida</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-del-paquete-de-placa-dualmcu-one">1. Instalación del Paquete de Placa DualMCU-ONE</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instalacion-del-paquete-de-placa-cocket-nova-ch552">2. Instalación del Paquete de Placa Cocket Nova CH552</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Cesar Bautista
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Unit Electronics.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
