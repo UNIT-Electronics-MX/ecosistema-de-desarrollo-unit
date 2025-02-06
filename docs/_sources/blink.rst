@@ -20,6 +20,19 @@ Parpadeo (blink)
 
 Un parpadeo de LED es un proyecto común para comenzar con microcontroladores. Lo que no te dicen es la equivalencia de un parpadeo en diferentes plataformas. Para Arduino IDE, MicroPython o SDCC puede difererir en la cantidad de líneas de código, pero el resultado es el mismo: un LED que parpadea.
 
+.. tip:: 
+   Con frecuencia, las tarjetas de desarrollo tienen un LED integrado en un pin específico, como el pin 13 en Arduino Uno o el pin 25 en Raspberry Pi Pico.
+
+
+.. _figura-LED:
+
+.. figure::  /_static/RGB_LED.jpg
+   :align: center
+   :alt: LEDs
+   :width: 60%
+
+    LEDs
+    
 .. tabs::
 
     .. tab:: MicroPython
@@ -50,29 +63,59 @@ Un parpadeo de LED es un proyecto común para comenzar con microcontroladores. L
                         delay(500);
                 }
 
+
+
+.. _figura-LED:
+
+.. figure::  /_static/ouput_led.png
+   :align: center
+   :alt: LEDs
+   :width: 60%
+
+    LEDs
+
+.. tabs::
+    
     .. tab:: SDCC
 
         .. code-block:: c
 
-                #include "src/system.h" 
-                #include "src/gpio.h"  
-                #include "src/delay.h"  
+            #include "src/system.h" 
+            #include "src/gpio.h"  
+            #include "src/delay.h"  
 
-                #define PIN_LED P34
+            #define PIN_LED P34
 
-                void main(void)
-                {
-                        CLK_config();
-                        DLY_ms(5);
+            void main(void)
+            {
+                    CLK_config();
+                    DLY_ms(5);
 
-                        PIN_output(PIN_LED);
-                        while (1)
-                        {
-                                PIN_toggle(PIN_LED);
-                                DLY_ms(500);
-                        }
-                }
+                    PIN_output(PIN_LED);
+                    while (1)
+                    {
+                            PIN_toggle(PIN_LED);
+                            DLY_ms(500);
+                    }
+            }
 
+
+    .. tab:: C++
+
+        .. code-block:: cpp
+
+            #define LED_BUILTIN 34 // 34 to 33
+
+            void setup() {
+            pinMode(LED_BUILTIN, OUTPUT);
+            }
+
+            void loop() {
+            digitalWrite(LED_BUILTIN, HIGH); 
+            delay(500);
+            digitalWrite(LED_BUILTIN, LOW);    
+            delay(500);
+            }
 
 
 
