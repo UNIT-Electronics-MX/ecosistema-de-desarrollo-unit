@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Conector JST SH 1.0mm 4 pins &#8212; documentación de Introducción al Ecosistema de Desarrollo UNIT  - 0.0.1</title>
+    <title>Conector JST SH 1.0mm 4 pines &#8212; documentación de Introducción al Ecosistema de Desarrollo UNIT  - 0.0.1</title>
   
   
   
@@ -53,9 +53,11 @@
     <script src="_static/translations.js?v=efdbd0b9"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'jst';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '0_1_jst';</script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Salidas digitales" href="1_outputDigital.html" />
+    <link rel="prev" title="Arduino IDE" href="duino.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="es"/>
   </head>
@@ -118,8 +120,6 @@
       
       
       
-        
-      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -168,10 +168,11 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenido</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="upython.html">MicroPython</a></li>
 <li class="toctree-l1"><a class="reference internal" href="duino.html">Arduino IDE</a></li>
 
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Conector JST SH 1.0mm 4 pines</a></li>
 <li class="toctree-l1"><a class="reference internal" href="1_outputDigital.html">Salidas digitales</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="2_inputDigital.html">Entradas digitales</a></li>
@@ -231,7 +232,7 @@
       
       
       
-      <li><a href="https://github.com/UNIT-Electronics/DualMCU-ONE" target="_blank"
+      <li><a href="https://github.com/UNIT-Electronics-MX/Ecosistema-de-Desarrollo-UNIT" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Repositorio de origen"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -248,7 +249,7 @@
       
       
       
-      <li><a href="https://github.com/UNIT-Electronics/DualMCU-ONE/edit/main/docs/jst.rst" target="_blank"
+      <li><a href="https://github.com/UNIT-Electronics-MX/Ecosistema-de-Desarrollo-UNIT/edit/main/docs/0_1_jst.rst" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -265,7 +266,7 @@
       
       
       
-      <li><a href="https://github.com/UNIT-Electronics/DualMCU-ONE/issues/new?title=Issue%20on%20page%20%2Fjst.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/UNIT-Electronics-MX/Ecosistema-de-Desarrollo-UNIT/issues/new?title=Issue%20on%20page%20%2F0_1_jst.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Abrir un problema"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -295,7 +296,7 @@
       
       
       
-      <li><a href="_sources/jst.rst" target="_blank"
+      <li><a href="_sources/0_1_jst.rst" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Descargar archivo fuente"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -366,7 +367,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -377,11 +380,19 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Conector JST SH 1.0mm 4 pins</h1>
+    <h1>Conector JST SH 1.0mm 4 pines</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-integracion-del-conector-jst-sh-1-0mm-4-pines">Ejemplo de integración del conector JST SH 1.0mm 4 pines</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -391,46 +402,63 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="conector-jst-sh-1-0mm-4-pins">
-<h1>Conector JST SH 1.0mm 4 pins<a class="headerlink" href="#conector-jst-sh-1-0mm-4-pins" title="Link to this heading">#</a></h1>
-<p>The JST SH 1.0mm 4 pins is a connector that is used to connect the DualMCU ONE board to devices such as sensors, actuators, and other peripherals.
-The connector has a pitch of 1.0mm and is commonly used in small electronic devices.</p>
+  <section id="conector-jst-sh-1-0mm-4-pines">
+<h1>Conector JST SH 1.0mm 4 pines<a class="headerlink" href="#conector-jst-sh-1-0mm-4-pines" title="Link to this heading">#</a></h1>
+<p>El conector JST SH 1.0mm 4 pines es un conector que se utiliza para conectar las placas <strong>DualMCU, DualMCU ONE y Cocket Nova</strong> a dispositivos como sensores, actuadores y otros periféricos.
+El conector tiene un paso de 1.0mm y se usa comúnmente en dispositivos electrónicos pequeños.</p>
 <figure class="align-center" id="id1">
-<a class="reference internal image-reference" href="_images/jst.jpg"><img alt="JST SH 1.0mm 4 pins" src="_images/jst.jpg" style="width: 60%;" /></a>
+<a class="reference internal image-reference" href="_images/jst.jpg"><img alt="JST SH 1.0mm 4 pines" src="_images/jst.jpg" style="width: 60%;" /></a>
 <figcaption>
-<p><span class="caption-text">JST SH 1.0mm 4 pins</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 3 </span><span class="caption-text">JST SH 1.0mm 4 pines</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>For connecting the JST SH 1.0mm 4 pins connector to the DualMCU ONE board, follow the steps below:</p>
+<p>Para conectar el conector JST SH 1.0mm 4 pines a la placa DualMCU ONE, siga los pasos a continuación:</p>
 <ol class="arabic simple">
-<li><p><strong>Identify the connector</strong>: The JST SH 1.0mm 4 pins connector has a pitch of 1.0mm and 4 pins.</p></li>
+<li><p><strong>Identificar el conector</strong>: El conector JST SH 1.0mm 4 pines tiene un paso de 1.0mm y 4 pines.</p></li>
 </ol>
 <figure class="align-center" id="id2">
-<a class="reference internal image-reference" href="_images/dualmcu_one3.png"><img alt="JST SH 1.0mm 4 pins" src="_images/dualmcu_one3.png" style="width: 60%;" /></a>
+<a class="reference internal image-reference" href="_images/dualmcu_one3.png"><img alt="JST SH 1.0mm 4 pines" src="_images/dualmcu_one3.png" style="width: 60%;" /></a>
 <figcaption>
-<p><span class="caption-text">JST SH 1.0mm 4 pins (example for communication I2C)</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 4 </span><span class="caption-text">JST SH 1.0mm 4 pines (ejemplo para comunicación I2C)</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <ol class="arabic simple" start="2">
-<li><p><strong>Connect the connector</strong>: Align the connector with the pins on the DualMCU ONE board and gently push the connector onto the pins.</p></li>
+<li><p><strong>Conectar el conector</strong>: Alinee el conector con los pines en la placa DualMCU ONE y empuje suavemente el conector sobre los pines.</p></li>
 </ol>
 <div class="admonition caution">
 <p class="admonition-title">Prudencia</p>
-<p>Sometimes the connector colors do not correspond to the pins. Be careful when connecting the connector to the board.</p>
+<p>A veces los colores del conector no corresponden a los pines. Tenga cuidado al conectar el conector a la placa.</p>
 </div>
 <ol class="arabic simple" start="3">
-<li><p><strong>Verify the connection</strong>: After connecting the JST SH 1.0mm 4 pins connector to the DualMCU ONE board, verify the connection by checking the pins on the board.</p></li>
+<li><p><strong>Verificar la conexión</strong>: Después de conectar el conector JST SH 1.0mm 4 pines a la placa DualMCU ONE, verifique la conexión comprobando los pines en la placa.</p></li>
 </ol>
 <figure class="align-center" id="id3">
-<span id="figure-jst-connected"></span><a class="reference internal image-reference" href="_images/jst_connected.jpg"><img alt="JST SH 1.0mm 4 pins connected" src="_images/jst_connected.jpg" style="width: 60%;" /></a>
+<span id="figure-jst-connected"></span><a class="reference internal image-reference" href="_images/jst_connected.jpg"><img alt="JST SH 1.0mm 4 pines conectado" src="_images/jst_connected.jpg" style="width: 60%;" /></a>
 <figcaption>
-<p><span class="caption-text">JST SH 1.0mm 4 pins connected</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 5 </span><span class="caption-text">JST SH 1.0mm 4 pines conectado</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
-<p>The JST SH 1.0mm 4 pins connector is compatible with Cocket Nova developed board.</p>
+<p>El conector JST SH 1.0mm 4 pines es compatible con la placa desarrollada Cocket Nova.</p>
 </div>
+<figure class="align-center" id="id4">
+<span id="figure-oled-cocket"></span><a class="reference internal image-reference" href="_images/oled2.png"><img alt="OLED a Cocket Nova" src="_images/oled2.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 6 </span><span class="caption-text">OLED a Cocket Nova</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<section id="ejemplo-de-integracion-del-conector-jst-sh-1-0mm-4-pines">
+<h2>Ejemplo de integración del conector JST SH 1.0mm 4 pines<a class="headerlink" href="#ejemplo-de-integracion-del-conector-jst-sh-1-0mm-4-pines" title="Link to this heading">#</a></h2>
+<p>Este ejemplo demuestra cómo integrar el Cargador Boost LiPo UNIT y el Monitor I2C con un ESP32 y mostrar el estado de la batería en una pantalla OLED.</p>
+<p>Para más detalles del ejemplo, visite el siguiente enlace: <a class="reference external" href="https://unit-electronics.github.io/UNIT-LiPo-Charger-Boost-I2C-Monitor/example.html">Ejemplo de integración</a></p>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/example.jpg"><img alt="Ejemplo de integración de un JST  a la placa DualMCU" src="_images/example.jpg" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 7 </span><span class="caption-text">Ejemplo de integración deL conector JST a la placa DualMCU</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 
 
@@ -444,12 +472,45 @@ The connector has a pitch of 1.0mm and is commonly used in small electronic devi
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="duino.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">Arduino IDE</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="1_outputDigital.html"
+       title="siguiente página">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">Salidas digitales</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-integracion-del-conector-jst-sh-1-0mm-4-pines">Ejemplo de integración del conector JST SH 1.0mm 4 pines</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

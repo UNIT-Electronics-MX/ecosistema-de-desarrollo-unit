@@ -40,7 +40,7 @@ copybutton_only_copy_prompt_lines = False  # Copies all lines, including those w
 
 templates_path = ['_templates']
 html_theme_options = {
-    "repository_url": "https://github.com/UNIT-Electronics/DualMCU-ONE/",
+    "repository_url": "https://github.com/UNIT-Electronics-MX/Ecosistema-de-Desarrollo-UNIT",
     "repository_branch": "main",  # Rama principal de tu repositorio
       "path_to_docs": "docs/",  # Ruta a la documentación dentro del repositorio
     "use_repository_button": True,  # Muestra un botón que enlaza al repositorio
