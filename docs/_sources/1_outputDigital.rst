@@ -23,8 +23,6 @@ Un parpadeo de LED es un proyecto común para comenzar con microcontroladores. L
 .. tip:: 
     Con frecuencia, las tarjetas de desarrollo tienen un LED integrado en un pin específico, como el pin 13 en Arduino Uno o el pin 25 en Raspberry Pi Pico.
 
-MicroPython y Arduino IDE
-~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. _figura-LED:
 
@@ -34,6 +32,11 @@ MicroPython y Arduino IDE
     :width: 30%
 
     RGB_LED
+
+MicroPython y Arduino IDE
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 .. note::
      En el siguiente ejemplo, se utiliza el pin 25 para el LED en la placa de desarrollo DualMCU RP2040. Modifica el pin según la placa de desarrollo que estés utilizando.
@@ -285,37 +288,25 @@ Requieren de una señal PWM para controlar la posición del eje del motor. La ma
                import machine
                import utime
 
-               # Configuración del pin de control del servomotor (puedes cambiarlo según tus conexiones)
-               servo_pin = machine.Pin(0)  # Cambia a tu pin deseado
-
-               # Crea un objeto PWM para controlar el servomotor
+               servo_pin = machine.Pin(0)
                pwm_servo = machine.PWM(servo_pin)
-
-               # Frecuencia del PWM para el servomotor (generalmente alrededor de 50 Hz)
                pwm_servo.freq(50)
 
                def set_servo_angle(angle):
-               # Convierte el ángulo deseado (en grados) a un valor de ciclo de trabajo
-               # Ten en cuenta que los valores específicos pueden variar según el servo
-               duty_cycle = int(1024 + (angle / 180) * 3072)
-               pwm_servo.duty_u16(duty_cycle)
+                    duty_cycle = int(1024 + (angle / 180) * 3072)
+                    pwm_servo.duty_u16(duty_cycle)
 
                try:
-               while True:
-                    # Mueve el servomotor de 0 a 180 grados
-                    for angle in range(0, 181, 10):
-                         set_servo_angle(angle)
-                         utime.sleep(0.1)
-
-                    # Mueve el servomotor de 180 a 0 grados
-                    for angle in range(180, -1, -10):
-                         set_servo_angle(angle)
-                         utime.sleep(0.1)
-
+                    while True:
+                         for angle in range(0, 181, 10):
+                              set_servo_angle(angle)
+                              utime.sleep(0.1)
+                         for angle in range(180, -1, -10):
+                              set_servo_angle(angle)
+                              utime.sleep(0.1)
                except KeyboardInterrupt:
-               # Detén el PWM y limpia los recursos al interrumpir el programa con Ctrl+C
-               pwm_servo.deinit()
-               print("\nPWM detenido. Recursos liberados.")
+                    pwm_servo.deinit()
+                    print("\nPWM detenido. Recursos liberados.")
 
      .. tab:: C++
 

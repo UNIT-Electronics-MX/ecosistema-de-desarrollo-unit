@@ -57,7 +57,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = '3_adc';</script>
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Cómo Generar un Informe de Error" href="report.html" />
+    <link rel="next" title="I2C (Inter-Integrated Circuit)" href="4_i2c.html" />
     <link rel="prev" title="Entradas digitales" href="2_inputDigital.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="es"/>
@@ -178,6 +178,10 @@
 
 <li class="toctree-l1"><a class="reference internal" href="2_inputDigital.html">Entradas digitales</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Conversión de Analógico a Digital</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_i2c.html">I2C (Inter-Integrated Circuit)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_spi.html">SPI (Interfaz Periférica Serial)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_USB.html">Interfaz USB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WS2812.html">Control WS2812</a></li>
 <li class="toctree-l1"><a class="reference internal" href="report.html">Cómo Generar un Informe de Error</a></li>
 </ul>
 
@@ -397,15 +401,14 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#codificacion">Codificación</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equivalencia-de-lectura-de-adc-en-diferentes-alternativas">Equivalencia de lectura de ADC en diferentes alternativas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#codigo-de-ejemplo">Código de Ejemplo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clase-adc">Clase ADC</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine.ADC"><code class="docutils literal notranslate"><span class="pre">machine.ADC</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#codigo-de-ejemplo">Código de Ejemplo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython-y-arduino-ide">MicroPython y Arduino IDE</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-definicion">Ejemplo de Definición</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-de-valores">Lectura de Valores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arduino-ide-y-sdcc">Arduino IDE y SDCC</a></li>
 </ul>
             </nav>
         </div>
@@ -431,7 +434,7 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
 <h3>Cuantificación y Codificación de Señales Analógicas<a class="headerlink" href="#cuantificacion-y-codificacion-de-senales-analogicas" title="Link to this heading">#</a></h3>
 <p>Las señales analógicas son continuas y pueden tomar cualquier valor dentro de un rango dado. En cambio, las señales digitales son discretas y solo pueden adoptar valores específicos. La conversión de una señal analógica a digital implica dos pasos: cuantificación y codificación.</p>
 <figure class="align-center" id="id1">
-<span id="figura-adc"></span><a class="reference internal image-reference" href="_images/adc.png"><img alt="Conversión de Analógico a Digital" src="_images/adc.png" style="width: 60%;" /></a>
+<span id="figura-adc"></span><a class="reference internal image-reference" href="_images/adc.png"><img alt="Conversión de Analógico a Digital" src="_images/adc.png" style="width: 80%;" /></a>
 <figcaption>
 <p><span class="caption-number">Figura 11 </span><span class="caption-text">Conversión de Analógico a Digital</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
@@ -507,6 +510,20 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
 <p>Asigna un código digital a cada nivel de cuantificación. Este código digital representa el valor de la señal analógica en dicho nivel.</p>
 </section>
 </section>
+<section id="equivalencia-de-lectura-de-adc-en-diferentes-alternativas">
+<h3>Equivalencia de lectura de ADC en diferentes alternativas<a class="headerlink" href="#equivalencia-de-lectura-de-adc-en-diferentes-alternativas" title="Link to this heading">#</a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">MicroPython</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">C++</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">SDCC</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">adc_value</span> <span class="o">=</span> <span class="n">adc</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c1"># Leer el valor del ADC</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">voltage_write</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">ADC0</span><span class="p">);</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_read</span><span class="p">();</span><span class="w"> </span><span class="c1">// Leer ADC (0 - 255, 8 bits)</span>
+</pre></div>
+</div>
+</div></div>
+</section>
 </section>
 <section id="codigo-de-ejemplo">
 <h2>Código de Ejemplo<a class="headerlink" href="#codigo-de-ejemplo" title="Link to this heading">#</a></h2>
@@ -515,12 +532,14 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
 <p>MicroPython no se encuentra disponible para la placa de desarrollo Cocket Nova su ejemplo es solo para SDCC.</p>
 </div>
 <p>A continuación, se muestra un ejemplo de código para leer continuamente un valor ADC e imprimirlo:</p>
+<section id="micropython-y-arduino-ide">
+<h3>MicroPython y Arduino IDE<a class="headerlink" href="#micropython-y-arduino-ide" title="Link to this heading">#</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
 <p>El siguiente código está diseñado para funcionar con el microcontrolador RP2040 en la placa de desarrollo DualMCU.</p>
 </div>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">MicroPython</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">C++</button><button aria-controls="panel-0-0-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-2" name="0-2" role="tab" tabindex="-1">SDCC</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">MicroPython</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">C++</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="c1"># Configuración del ADC</span>
@@ -534,7 +553,7 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                     <span class="c1"># Retraso de 1 segundo</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// El potenciómetro está conectado al GPIO 26 (ADC0 analógico)</span>
+</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// El potenciómetro está conectado al GPIO 26 (ADC0 analógico)</span>
 <span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">potPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">26</span><span class="p">;</span>
 
 <span class="c1">// Variable para almacenar el valor del potenciómetro</span>
@@ -554,7 +573,33 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
 <span class="p">}</span>
 </pre></div>
 </div>
-</div><div aria-labelledby="tab-0-0-2" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-2" name="0-2" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/system.h&quot;</span>
+</div></div>
+</section>
+</section>
+<section id="arduino-ide-y-sdcc">
+<h2>Arduino IDE y SDCC<a class="headerlink" href="#arduino-ide-y-sdcc" title="Link to this heading">#</a></h2>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">C++</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">SDCC</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define LED_BUILTIN 34</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="n">sensorPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">11</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">ledPin</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LED_BUILTIN</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">sensorValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">OUTPUT</span><span class="p">);</span>
+<span class="w">   </span><span class="n">pinMode</span><span class="p">(</span><span class="n">sensorPin</span><span class="p">,</span><span class="w"> </span><span class="n">INPUT</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="n">sensorValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">sensorPin</span><span class="p">);</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">HIGH</span><span class="p">);</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="n">sensorValue</span><span class="p">);</span>
+<span class="w">   </span><span class="n">digitalWrite</span><span class="p">(</span><span class="n">ledPin</span><span class="p">,</span><span class="w"> </span><span class="n">LOW</span><span class="p">);</span>
+<span class="w">   </span><span class="n">delay</span><span class="p">(</span><span class="n">sensorValue</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/system.h&quot;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/gpio.h&quot;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/delay.h&quot;</span>
 
@@ -573,45 +618,6 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
 <span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_read</span><span class="p">();</span><span class="w"> </span><span class="c1">// Leer valor ADC (0 - 255, 8 bits)</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
-</div>
-</div></div>
-</section>
-<section id="clase-adc">
-<h2>Clase ADC<a class="headerlink" href="#clase-adc" title="Link to this heading">#</a></h2>
-<p>La clase <code class="docutils literal notranslate"><span class="pre">machine.ADC</span></code> se utiliza para crear objetos ADC que pueden interactuar con los pines analógicos.</p>
-<dl class="py class">
-<dt class="sig sig-object py" id="machine.ADC">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">machine.</span></span><span class="sig-name descname"><span class="pre">ADC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pin</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#machine.ADC" title="Link to this definition">#</a></dt>
-<dd><p>El constructor de la clase ADC toma un solo argumento: el número de pin.</p>
-</dd></dl>
-
-</section>
-<section id="ejemplo-de-definicion">
-<h2>Ejemplo de Definición<a class="headerlink" href="#ejemplo-de-definicion" title="Link to this heading">#</a></h2>
-<p>Para definir y usar un objeto ADC, sigue este ejemplo:</p>
-<div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-1-1-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-1-1-0" name="1-0" role="tab" tabindex="0">MicroPython</button><button aria-controls="panel-1-1-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-1-1-1" name="1-1" role="tab" tabindex="-1">C++</button></div><div aria-labelledby="tab-1-1-0" class="sphinx-tabs-panel" id="panel-1-1-0" name="1-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
-<span class="n">adc</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">ADC</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Inicializar ADC en el pin A0</span>
-</pre></div>
-</div>
-</div><div aria-labelledby="tab-1-1-1" class="sphinx-tabs-panel" hidden="true" id="panel-1-1-1" name="1-1" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define ADC0 26</span>
-</pre></div>
-</div>
-</div></div>
-</section>
-<section id="lectura-de-valores">
-<h2>Lectura de Valores<a class="headerlink" href="#lectura-de-valores" title="Link to this heading">#</a></h2>
-<p>Para leer el valor analógico convertido a formato digital:</p>
-<div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-2-2-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-2-2-0" name="2-0" role="tab" tabindex="0">MicroPython</button><button aria-controls="panel-2-2-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-1" name="2-1" role="tab" tabindex="-1">C++</button><button aria-controls="panel-2-2-2" aria-selected="false" class="sphinx-tabs-tab" id="tab-2-2-2" name="2-2" role="tab" tabindex="-1">SDCC</button></div><div aria-labelledby="tab-2-2-0" class="sphinx-tabs-panel" id="panel-2-2-0" name="2-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">adc_value</span> <span class="o">=</span> <span class="n">adc</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c1"># Leer el valor del ADC</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">adc_value</span><span class="p">)</span>  <span class="c1"># Imprimir el valor del ADC</span>
-</pre></div>
-</div>
-</div><div aria-labelledby="tab-2-2-1" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-1" name="2-1" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">voltage_write</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">analogRead</span><span class="p">(</span><span class="n">ADC0</span><span class="p">);</span>
-</pre></div>
-</div>
-</div><div aria-labelledby="tab-2-2-2" class="sphinx-tabs-panel" hidden="true" id="panel-2-2-2" name="2-2" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADC_read</span><span class="p">();</span><span class="w"> </span><span class="c1">// Leer ADC (0 - 255, 8 bits)</span>
 </pre></div>
 </div>
 </div></div>
@@ -639,11 +645,11 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
       </div>
     </a>
     <a class="right-next"
-       href="report.html"
+       href="4_i2c.html"
        title="siguiente página">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">siguiente</p>
-        <p class="prev-next-title">Cómo Generar un Informe de Error</p>
+        <p class="prev-next-title">I2C (Inter-Integrated Circuit)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -669,15 +675,14 @@ Los microcontroladores utilizan ADC para leer señales analógicas de sensores y
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#codificacion">Codificación</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equivalencia-de-lectura-de-adc-en-diferentes-alternativas">Equivalencia de lectura de ADC en diferentes alternativas</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#codigo-de-ejemplo">Código de Ejemplo</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#clase-adc">Clase ADC</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine.ADC"><code class="docutils literal notranslate"><span class="pre">machine.ADC</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#codigo-de-ejemplo">Código de Ejemplo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython-y-arduino-ide">MicroPython y Arduino IDE</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-definicion">Ejemplo de Definición</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lectura-de-valores">Lectura de Valores</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arduino-ide-y-sdcc">Arduino IDE y SDCC</a></li>
 </ul>
   </nav></div>
 

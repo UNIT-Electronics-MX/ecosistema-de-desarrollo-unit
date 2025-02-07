@@ -24,7 +24,7 @@ Para conectar el conector JST SH 1.0mm 4 pines a la placa DualMCU ONE, siga los 
 
 2. **Conectar el conector**: Alinee el conector con los pines en la placa DualMCU ONE y empuje suavemente el conector sobre los pines.
 
-.. caution:: 
+.. warning:: 
     
     A veces los colores del conector no corresponden a los pines. Tenga cuidado al conectar el conector a la placa.
 

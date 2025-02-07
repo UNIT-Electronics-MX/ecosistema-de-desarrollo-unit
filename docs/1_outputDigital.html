@@ -178,6 +178,10 @@
 
 <li class="toctree-l1"><a class="reference internal" href="2_inputDigital.html">Entradas digitales</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_adc.html">Conversión de Analógico a Digital</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_i2c.html">I2C (Inter-Integrated Circuit)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_spi.html">SPI (Interfaz Periférica Serial)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="6_USB.html">Interfaz USB</a></li>
+<li class="toctree-l1"><a class="reference internal" href="WS2812.html">Control WS2812</a></li>
 <li class="toctree-l1"><a class="reference internal" href="report.html">Cómo Generar un Informe de Error</a></li>
 </ul>
 
@@ -446,14 +450,14 @@ document.write(`
 <p class="admonition-title">Truco</p>
 <p>Con frecuencia, las tarjetas de desarrollo tienen un LED integrado en un pin específico, como el pin 13 en Arduino Uno o el pin 25 en Raspberry Pi Pico.</p>
 </div>
-<section id="micropython-y-arduino-ide">
-<h3>MicroPython y Arduino IDE<a class="headerlink" href="#micropython-y-arduino-ide" title="Link to this heading">#</a></h3>
 <figure class="align-center" id="id3">
 <span id="figura-led"></span><a class="reference internal image-reference" href="_images/RGB_LED.jpg"><img alt="LEDs" src="_images/RGB_LED.jpg" style="width: 30%;" /></a>
 <figcaption>
 <p><span class="caption-number">Figura 8 </span><span class="caption-text">RGB_LED</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
+<section id="micropython-y-arduino-ide">
+<h3>MicroPython y Arduino IDE<a class="headerlink" href="#micropython-y-arduino-ide" title="Link to this heading">#</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
 <p>En el siguiente ejemplo, se utiliza el pin 25 para el LED en la placa de desarrollo DualMCU RP2040. Modifica el pin según la placa de desarrollo que estés utilizando.</p>
@@ -655,37 +659,25 @@ document.write(`
 <div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-4-4-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-4-4-0" name="4-0" role="tab" tabindex="0">MicroPython</button><button aria-controls="panel-4-4-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-4-4-1" name="4-1" role="tab" tabindex="-1">C++</button></div><div aria-labelledby="tab-4-4-0" class="sphinx-tabs-panel" id="panel-4-4-0" name="4-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
 <span class="kn">import</span> <span class="nn">utime</span>
 
-<span class="c1"># Configuración del pin de control del servomotor (puedes cambiarlo según tus conexiones)</span>
-<span class="n">servo_pin</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Cambia a tu pin deseado</span>
-
-<span class="c1"># Crea un objeto PWM para controlar el servomotor</span>
+<span class="n">servo_pin</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">pwm_servo</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">PWM</span><span class="p">(</span><span class="n">servo_pin</span><span class="p">)</span>
-
-<span class="c1"># Frecuencia del PWM para el servomotor (generalmente alrededor de 50 Hz)</span>
 <span class="n">pwm_servo</span><span class="o">.</span><span class="n">freq</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">set_servo_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">):</span>
-<span class="c1"># Convierte el ángulo deseado (en grados) a un valor de ciclo de trabajo</span>
-<span class="c1"># Ten en cuenta que los valores específicos pueden variar según el servo</span>
-<span class="n">duty_cycle</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1024</span> <span class="o">+</span> <span class="p">(</span><span class="n">angle</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3072</span><span class="p">)</span>
-<span class="n">pwm_servo</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">duty_cycle</span><span class="p">)</span>
+     <span class="n">duty_cycle</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1024</span> <span class="o">+</span> <span class="p">(</span><span class="n">angle</span> <span class="o">/</span> <span class="mi">180</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3072</span><span class="p">)</span>
+     <span class="n">pwm_servo</span><span class="o">.</span><span class="n">duty_u16</span><span class="p">(</span><span class="n">duty_cycle</span><span class="p">)</span>
 
 <span class="k">try</span><span class="p">:</span>
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-     <span class="c1"># Mueve el servomotor de 0 a 180 grados</span>
-     <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">181</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
-          <span class="n">set_servo_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
-          <span class="n">utime</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
-     <span class="c1"># Mueve el servomotor de 180 a 0 grados</span>
-     <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">):</span>
-          <span class="n">set_servo_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
-          <span class="n">utime</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
+     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+          <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">181</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+               <span class="n">set_servo_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+               <span class="n">utime</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+          <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">):</span>
+               <span class="n">set_servo_angle</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+               <span class="n">utime</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-<span class="c1"># Detén el PWM y limpia los recursos al interrumpir el programa con Ctrl+C</span>
-<span class="n">pwm_servo</span><span class="o">.</span><span class="n">deinit</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PWM detenido. Recursos liberados.&quot;</span><span class="p">)</span>
+     <span class="n">pwm_servo</span><span class="o">.</span><span class="n">deinit</span><span class="p">()</span>
+     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PWM detenido. Recursos liberados.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div><div aria-labelledby="tab-4-4-1" class="sphinx-tabs-panel" hidden="true" id="panel-4-4-1" name="4-1" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#define SERVO_PIN 0</span>

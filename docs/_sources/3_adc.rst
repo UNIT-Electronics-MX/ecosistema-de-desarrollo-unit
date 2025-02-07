@@ -23,7 +23,7 @@ Las señales analógicas son continuas y pueden tomar cualquier valor dentro de 
 .. figure::  /_static/adc.png
    :align: center
    :alt: Conversión de Analógico a Digital
-   :width: 60%
+   :width: 80%
 
    Conversión de Analógico a Digital
 
@@ -82,6 +82,27 @@ Codificación
 Asigna un código digital a cada nivel de cuantificación. Este código digital representa el valor de la señal analógica en dicho nivel.
 
 
+Equivalencia de lectura de ADC en diferentes alternativas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. tabs:: 
+
+   .. tab:: MicroPython
+
+      .. code-block:: python
+
+         adc_value = adc.read() # Leer el valor del ADC
+
+   .. tab:: C++
+
+      .. code-block:: cpp
+
+         voltage_write = analogRead(ADC0);
+
+   .. tab:: SDCC
+
+      .. code-block:: c
+
+         int data = ADC_read(); // Leer ADC (0 - 255, 8 bits)
 
 
 Código de Ejemplo
@@ -91,6 +112,9 @@ Código de Ejemplo
    MicroPython no se encuentra disponible para la placa de desarrollo Cocket Nova su ejemplo es solo para SDCC.
 
 A continuación, se muestra un ejemplo de código para leer continuamente un valor ADC e imprimirlo:
+
+MicroPython y Arduino IDE
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. note:: 
    El siguiente código está diseñado para funcionar con el microcontrolador RP2040 en la placa de desarrollo DualMCU.
@@ -137,6 +161,42 @@ A continuación, se muestra un ejemplo de código para leer continuamente un val
              delay(500);
          }
 
+
+
+
+
+
+Arduino IDE y SDCC
+------------------
+
+
+
+.. tabs::
+
+   .. tab:: C++
+
+      .. code-block:: cpp
+
+         #define LED_BUILTIN 34
+
+         int sensorPin = 11;
+         int ledPin = LED_BUILTIN;
+         int sensorValue = 0;
+
+         void setup() {
+            pinMode(ledPin, OUTPUT);
+            pinMode(sensorPin, INPUT);
+         }
+
+         void loop() {
+            sensorValue = analogRead(sensorPin);
+            digitalWrite(ledPin, HIGH);
+            delay(sensorValue);
+            digitalWrite(ledPin, LOW);
+            delay(sensorValue);
+         }
+
+
    .. tab:: SDCC
 
       .. code-block:: c
@@ -161,57 +221,4 @@ A continuación, se muestra un ejemplo de código para leer continuamente un val
              }
          }
 
-Clase ADC
----------
 
-La clase ``machine.ADC`` se utiliza para crear objetos ADC que pueden interactuar con los pines analógicos.
-
-.. class:: machine.ADC(pin)
-
-   El constructor de la clase ADC toma un solo argumento: el número de pin.
-
-Ejemplo de Definición
----------------------
-
-Para definir y usar un objeto ADC, sigue este ejemplo:
-
-.. tabs::
-
-   .. tab:: MicroPython
-
-      .. code-block:: python
-
-         import machine
-         adc = machine.ADC(0)  # Inicializar ADC en el pin A0
-
-   .. tab:: C++
-
-      .. code-block:: cpp
-
-         #define ADC0 26
-
-Lectura de Valores
-------------------
-
-Para leer el valor analógico convertido a formato digital:
-
-.. tabs:: 
-
-   .. tab:: MicroPython
-
-      .. code-block:: python
-
-         adc_value = adc.read() # Leer el valor del ADC
-         print(adc_value)  # Imprimir el valor del ADC
-
-   .. tab:: C++
-
-      .. code-block:: cpp
-
-         voltage_write = analogRead(ADC0);
-
-   .. tab:: SDCC
-
-      .. code-block:: c
-
-         int data = ADC_read(); // Leer ADC (0 - 255, 8 bits)
