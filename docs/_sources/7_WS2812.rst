@@ -1,0 +1,123 @@
+
+Control WS2812 
+=================
+
+El led WS2812 es un led RGB que se puede controlar con un solo pin de datos. Es muy popular en proyectos de iluminación y decoración. En este tutorial, aprenderás cómo controlar un led WS2812 con MicroPython y Arduino.
+
+.. _figura-neo:
+
+.. figure:: /_static/neo.jpg
+     :align: center
+     :alt: led rgb
+     :width: 40%
+
+     Tira LED WS2812
+
+MicroPython y Arduino IDE
+--------------------------
+
+.. tabs::
+
+      .. tab:: MicroPython
+
+            .. code-block:: python
+                  
+                  from machine import Pin
+                  from neopixel import NeoPixel
+                  np = NeoPixel(Pin(24), 1)
+                  np[0] = (255, 128, 0)
+
+                  np.write()
+      
+      .. tab:: C++
+
+            .. code-block:: cpp
+
+                  #include <Adafruit_NeoPixel.h>
+                  #define PIN 24
+                  #define NUMPIXELS 1
+                  Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+                  pixels.setPixelColor(0, pixels.Color(255, 128, 0));
+                  pixels.show();
+
+..  tip::
+      para obtener más información sobre la biblioteca NeoPixel, consulta la `Documentación de la Biblioteca NeoPixel <https://github.com/lvidarte/esp8266/wiki/MicroPython:-NeoPixels>`_.
+
+
+Control WS2812 con SDCC
+-----------------------
+
+
+                 
+.. figure:: /_static/cocket/neopixel.png
+     :align: center
+     :alt: led rgb
+     :width: 60%
+
+     Tira LED WS2812
+
+.. tabs::
+
+      .. tab:: SDCC
+
+            .. code-block:: C
+                  
+                  #include "src/config.h"
+                  #include "src/system.h"
+                  #include "src/delay.h"
+                  #include "src/neo.h"
+                  #include <stdlib.h>
+
+                  #define delay 100
+                  #define NeoPixel 2
+                  #define level 100
+
+                  void randomColorSequence(void) {
+
+                  for(int j=0;j<NeoPixel;j++){
+                         uint8_t red = rand() % level;
+                         uint8_t green = rand() % level;
+                         uint8_t blue = rand() % level;
+                         uint8_t num = rand() % NeoPixel;
+
+                         for(int i=0; i<num; i++){
+                         NEO_writeColor(0, 0, 0);
+                         }
+                         NEO_writeColor(red, green, blue);
+                         DLY_ms(delay);
+                         NEO_writeColor(0, 0, 0);
+                  }
+                  
+                  for(int l=0; l<9; l++){
+                         NEO_writeColor(0, 0, 0);
+                  }
+
+                  }
+
+                  void main(void) {
+                  NEO_init();
+                  CLK_config();
+                  DLY_ms(delay);
+
+                  while (1) {
+                         randomColorSequence();
+                         DLY_ms(10);
+                        
+                  }
+                  }
+
+      .. tab:: Arduino-IDE
+
+            .. code-block:: C++
+
+.. htmlonly::
+   
+
+
+
+.. only:: html
+
+    .. figure:: /_static/cocket/NEO.gif
+        :align: center
+        :alt: figura-gif
+        :width: 60%

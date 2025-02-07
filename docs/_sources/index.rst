@@ -17,7 +17,7 @@ El ecosistema de desarrollo de UNIT Electronics está diseñado para ofrecer el 
   4_i2c
   5_spi
   6_USB
-  WS2812.rst
+  7_WS2812.rst
   report
   
   
