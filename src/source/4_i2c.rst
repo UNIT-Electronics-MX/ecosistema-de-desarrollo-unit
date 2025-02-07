@@ -2,7 +2,6 @@ I2C (Inter-Integrated Circuit)
 ===============================
 
 
-
 Descripción General del I2C
 ---------------------------
 
@@ -16,98 +15,14 @@ Bit-banging es una técnica de programación en la que se manipulan directamente
    :width: 90%
 
    Pines I2C Imagen obtenida de `Application Note A Basic Guide to I2C <https://www.ti.com/lit/an/sbaa565/sbaa565.pdf?ts=1738832263153&ref_url=https%253A%252F%252Fwww.google.com%252F>`_
- 
-Detalles de Pines
------------------
 
-A continuación, se muestra l
+.. nota::
+   Las tarjetas de desarrollo de UNIT ELECTRONICS son compatibles con `Conector JST </docs/0_1_jst.html#conector-jst-sh-1-0mm-4-pines>`_
+   
 
-.. list-table:: Asignación de Pines I2C
-   :widths: 20 20 20
-   :header-rows: 1
-   :align: center
 
-   * - PIN
-     - GPIO ESP32
-     - GPIO RP2040
-   * - SCLK
-     - 22
-     - 5 / 21 / 23
-   * - SDA
-     - 21
-     - 4 / 20 / 22
-
-Escaneo de Dispositivos I2C
----------------------------
-
-Para escanear dispositivos I2C conectados al bus, puedes utilizar el siguiente fragmento de código:
-
-.. tabs::
-
-   .. tab:: MicroPython
-
-      .. code-block:: python
-
-         import machine
-
-         i2c = machine.SoftI2C(0, scl=machine.Pin(5), sda=machine.Pin(4))
-         devices = i2c.scan()
-
-         for device in devices:
-             print("Dispositivo encontrado en la dirección: {}".format(hex(device)))
-
-   .. tab:: C++
-
-      .. code-block:: cpp
-
-        #include <Wire.h>
-
-        void setup() {
-          Wire.setSDA(4);
-          Wire.setSCL(5);
-          Wire.begin();
-          Serial.begin(9600);
-          while (!Serial);
-          Serial.println("\nEscaneo I2C");
-        }
-
-        void loop() {
-          byte error, address;
-          int nDevices;
-
-          Serial.println("Escaneando...");
-
-          nDevices = 0;
-          for(address = 1; address < 127; address++ ) {
-            Wire.beginTransmission(address);
-            error = Wire.endTransmission();
-
-            if (error == 0) {
-              Serial.print("Dispositivo I2C encontrado en la dirección 0x");
-              if (address<16)
-                Serial.print("0");
-              Serial.print(address, HEX);
-              Serial.println(" !");
-
-              nDevices++;
-            }
-            else if (error==4) {
-              Serial.print("Error desconocido en la dirección 0x");
-              if (address<16)
-                Serial.print("0");
-              Serial.println(address, HEX);
-            }    
-          }
-          if (nDevices == 0)
-            Serial.println("No se encontraron dispositivos I2C\n");
-          else
-            Serial.println("Listo\n");
-
-          delay(5000);
-        }
-
-Pantalla SSD1306
-----------------
+Ejemplo de aplicación Pantalla SSD1306
+---------------------------------------
 
 .. _figura-ssd1306-display:
 
