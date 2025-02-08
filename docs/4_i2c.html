@@ -49,6 +49,7 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/tabs.js?v=3030b3cb"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="_static/translations.js?v=efdbd0b9"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -396,12 +397,10 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-general-del-i2c">Descripción General del I2C</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-aplicacion-pantalla-ssd1306">Ejemplo de aplicación Pantalla SSD1306</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#soporte-de-biblioteca">Soporte de Biblioteca</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython">MicroPython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython-y-arduino-ide">MicroPython y Arduino IDE</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cocket-nova-implementacion-de-i2c">Cocket Nova implementación de I2C</a></li>
 </ul>
             </nav>
         </div>
@@ -427,7 +426,7 @@ document.write(`
 </figure>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
-<p>Las tarjetas de desarrollo de UNIT ELECTRONICS son compatibles con <a class="reference external" href="file:///media/mr/firmware/github/Ecosistema-de-Desarrollo-UNIT/docs/0_1_jst.html#conector-jst-sh-1-0mm-4-pines">file:///media/mr/firmware/github/Ecosistema-de-Desarrollo-UNIT/docs/0_1_jst.html#conector-jst-sh-1-0mm-4-pines</a></p>
+<p>Las tarjetas de desarrollo de UNIT ELECTRONICS son compatibles con <a class="reference external" href="https://unit-electronics-mx.github.io/Ecosistema-de-Desarrollo-UNIT/0_1_jst.html#conector-jst-sh-1-0mm-4-pines">Conector JST</a></p>
 </div>
 </section>
 <section id="ejemplo-de-aplicacion-pantalla-ssd1306">
@@ -466,23 +465,23 @@ document.write(`
 </tbody>
 </table>
 </div>
-<section id="soporte-de-biblioteca">
-<h3>Soporte de Biblioteca<a class="headerlink" href="#soporte-de-biblioteca" title="Link to this heading">#</a></h3>
-<section id="micropython">
-<h4>MicroPython<a class="headerlink" href="#micropython" title="Link to this heading">#</a></h4>
-<p>La biblioteca <cite>dualmcu.py</cite> para MicroPython en ESP32 &amp; RP2040 es compatible con el controlador de pantalla SSD1306.</p>
-<p><strong>Instalación</strong></p>
-<ol class="arabic simple">
-<li><p>Abre <a class="reference external" href="https://thonny.org/">Thonny</a>.</p></li>
-<li><p>Navega a <strong>Tools</strong> -&gt; <strong>Manage Packages</strong>.</p></li>
-<li><p>Busca <code class="docutils literal notranslate"><span class="pre">dualmcu</span></code> y haz clic en <strong>Install</strong>.</p></li>
-</ol>
-<p><strong>Configuración del Microcontrolador</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">SoftI2C</span><span class="p">(</span><span class="n">scl</span><span class="p">,</span> <span class="n">sda</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">freq</span><span class="o">=</span><span class="mi">400000</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">50000</span><span class="p">)</span>
-</pre></div>
-</div>
-<p><strong>Ejemplo de Código</strong></p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+<section id="micropython-y-arduino-ide">
+<h3>MicroPython y Arduino IDE<a class="headerlink" href="#micropython-y-arduino-ide" title="Link to this heading">#</a></h3>
+<div class="sphinx-tabs docutils container">
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">MicroPython</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">Arduino</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
+  <tr>
+    <th style="border: 1px solid #ccc; padding: 8px;">Biblioteca</th>
+    <th style="border: 1px solid #ccc; padding: 8px;">Enlace</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ccc; padding: 8px;">ocks</td>
+    <td style="border: 1px solid #ccc; padding: 8px;"><a href="https://pypi.org/project/ocks/" target="_blank">Ejemplo de instalación</a></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ccc; padding: 8px;">dualmcu</td>
+    <td style="border: 1px solid #ccc; padding: 8px;"><a href="https://pypi.org/project/dualmcu/" target="_blank">Biblioteca DualMCU</a></td>
+  </tr>
+</table><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
 <span class="kn">from</span> <span class="nn">dualmcu</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="n">i2c</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">SoftI2C</span><span class="p">(</span> <span class="n">scl</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">21</span><span class="p">))</span>
@@ -500,16 +499,7 @@ document.write(`
 <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>C++</p>
-<p>La biblioteca <cite>Adafruit_SSD1306</cite> para Arduino es compatible con el controlador de pantalla SSD1306.</p>
-<p><strong>Instalación</strong></p>
-<ol class="arabic simple">
-<li><p>Abre el IDE de Arduino.</p></li>
-<li><p>Navega a <strong>Tools</strong> -&gt; <strong>Manage Libraries</strong>.</p></li>
-<li><p>Busca <code class="docutils literal notranslate"><span class="pre">Adafruit_SSD1306</span></code> y haz clic en <strong>Install</strong>.</p></li>
-</ol>
-<p><strong>Ejemplo de Código</strong></p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Wire.h&gt;</span>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Wire.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Adafruit_GFX.h&gt;</span>
 <span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;Adafruit_SSD1306.h&gt;</span>
 
@@ -550,8 +540,46 @@ document.write(`
 <span class="p">}</span>
 </pre></div>
 </div>
+</div></div>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="_images/dualmcu_oled.jpg"><img alt="pantalla ssd1306" src="_images/dualmcu_oled.jpg" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 14 </span><span class="caption-text">Diagrama de Conexión de la Pantalla SSD1306 DualMCU</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
+<section id="cocket-nova-implementacion-de-i2c">
+<h2>Cocket Nova implementación de I2C<a class="headerlink" href="#cocket-nova-implementacion-de-i2c" title="Link to this heading">#</a></h2>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/config.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/system.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/gpio.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/delay.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;src/oled.h&quot;</span>
+
+
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="n">CLK_config</span><span class="p">();</span>
+<span class="w">  </span><span class="n">DLY_ms</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+
+<span class="w">  </span><span class="n">OLED_init</span><span class="p">();</span>
+
+<span class="w">  </span><span class="n">OLED_print</span><span class="p">(</span><span class="s">&quot;*  UNITelectronics  *&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">OLED_print</span><span class="p">(</span><span class="s">&quot;---------------------</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="n">OLED_print</span><span class="p">(</span><span class="s">&quot;Ready</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/oled.png"><img alt="pantalla ssd1306" src="_images/oled.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 15 </span><span class="caption-text">Pantalla OLED Cocket Nova</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 
@@ -602,12 +630,10 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-general-del-i2c">Descripción General del I2C</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-aplicacion-pantalla-ssd1306">Ejemplo de aplicación Pantalla SSD1306</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#soporte-de-biblioteca">Soporte de Biblioteca</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython">MicroPython</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython-y-arduino-ide">MicroPython y Arduino IDE</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cocket-nova-implementacion-de-i2c">Cocket Nova implementación de I2C</a></li>
 </ul>
   </nav></div>
 

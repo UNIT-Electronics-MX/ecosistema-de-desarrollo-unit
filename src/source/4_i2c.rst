@@ -17,7 +17,8 @@ Bit-banging es una técnica de programación en la que se manipulan directamente
    Pines I2C Imagen obtenida de `Application Note A Basic Guide to I2C <https://www.ti.com/lit/an/sbaa565/sbaa565.pdf?ts=1738832263153&ref_url=https%253A%252F%252Fwww.google.com%252F>`_
 
 .. nota::
-   Las tarjetas de desarrollo de UNIT ELECTRONICS son compatibles con `Conector JST </docs/0_1_jst.html#conector-jst-sh-1-0mm-4-pines>`_
+
+   Las tarjetas de desarrollo de UNIT ELECTRONICS son compatibles con `Conector JST <https://unit-electronics-mx.github.io/Ecosistema-de-Desarrollo-UNIT/0_1_jst.html#conector-jst-sh-1-0mm-4-pines>`_
    
 
 
@@ -51,98 +52,136 @@ La pantalla OLED monocromática de 128x64 píxeles equipada con un controlador S
    * - 4
      - SCL
 
-Soporte de Biblioteca
-~~~~~~~~~~~~~~~~~~~~~
+MicroPython y Arduino IDE
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MicroPython
-^^^^^^^^^^^
+.. tabs:: 
 
-La biblioteca `dualmcu.py` para MicroPython en ESP32 & RP2040 es compatible con el controlador de pantalla SSD1306.
+  .. tab:: MicroPython
 
-**Instalación**
+    .. raw:: html
 
-1. Abre `Thonny <https://thonny.org/>`_.
-2. Navega a **Tools** -> **Manage Packages**.
-3. Busca ``dualmcu`` y haz clic en **Install**.
 
-**Configuración del Microcontrolador**
+      <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
+        <tr>
+          <th style="border: 1px solid #ccc; padding: 8px;">Biblioteca</th>
+          <th style="border: 1px solid #ccc; padding: 8px;">Enlace</th>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ccc; padding: 8px;">ocks</td>
+          <td style="border: 1px solid #ccc; padding: 8px;"><a href="https://pypi.org/project/ocks/" target="_blank">Ejemplo de instalación</a></td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ccc; padding: 8px;">dualmcu</td>
+          <td style="border: 1px solid #ccc; padding: 8px;"><a href="https://pypi.org/project/dualmcu/" target="_blank">Biblioteca DualMCU</a></td>
+        </tr>
+      </table>
 
-.. code-block:: python
-  
-  SoftI2C(scl, sda, *, freq=400000, timeout=50000)
+    .. code-block:: python
 
-**Ejemplo de Código**
+      import machine
+      from dualmcu import *
 
-.. code-block:: python  
+      i2c = machine.SoftI2C( scl=machine.Pin(22), sda=machine.Pin(21))
 
-  import machine
-  from dualmcu import *
+      oled = SSD1306_I2C(128, 64, i2c)
 
-  i2c = machine.SoftI2C( scl=machine.Pin(22), sda=machine.Pin(21))
+      oled.fill(1)
+      oled.show()
 
-  oled = SSD1306_I2C(128, 64, i2c)
+      oled.fill(0)
+      oled.show()
+      oled.text('UNIT', 50, 10)
+      oled.text('ELECTRONICS', 25, 20)
 
-  oled.fill(1)
-  oled.show()
+      oled.show()
 
-  oled.fill(0)
-  oled.show()
-  oled.text('UNIT', 50, 10)
-  oled.text('ELECTRONICS', 25, 20)
+  .. tab:: Arduino
 
-  oled.show()
+    .. code-block:: cpp
+      
+      #include <Wire.h>
+      #include <Adafruit_GFX.h>
+      #include <Adafruit_SSD1306.h>
 
-C++
+      #define OLED_RESET     -1
+      #define SCREEN_WIDTH   128
+      #define SCREEN_HEIGHT  64
+      #define SDA_PIN        4
+      #define SCL_PIN        5
 
-La biblioteca `Adafruit_SSD1306` para Arduino es compatible con el controlador de pantalla SSD1306.
+      Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
-**Instalación**
+      void setup() {
+        Serial.begin(9600);
+        Wire.setSDA(4);
+        Wire.setSCL(5);
+        Wire.begin();
+        if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+          Serial.println(F("Error en la inicialización de la pantalla"));
+          for(;;);
+        }
+        display.clearDisplay();
+        display.setTextSize(1);
+        display.setTextColor(SSD1306_WHITE);
+        display.setCursor(0,0);
+        display.println(F("UNIT ELECTRONICS!"));
+        display.display();
+        delay(4000);
+      }
 
-1. Abre el IDE de Arduino.
-2. Navega a **Tools** -> **Manage Libraries**.
-3. Busca ``Adafruit_SSD1306`` y haz clic en **Install**.
+      void loop() {
+        display.clearDisplay();
+        display.setCursor(0, 10);
+        display.setTextSize(2);
+        display.print(F("Contador: "));
+        display.println(millis()/1000);
+        display.display();
+        delay(500);
+      }
 
-**Ejemplo de Código**
 
-.. code-block:: cpp
-  
-  #include <Wire.h>
-  #include <Adafruit_GFX.h>
-  #include <Adafruit_SSD1306.h>
 
-  #define OLED_RESET     -1
-  #define SCREEN_WIDTH   128
-  #define SCREEN_HEIGHT  64
-  #define SDA_PIN        4
-  #define SCL_PIN        5
+.. figure:: /_static/dualmcu/dualmcu_oled.jpg
+   :align: center
+   :alt: pantalla ssd1306
+   :width: 50%
 
-  Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+   Diagrama de Conexión de la Pantalla SSD1306 DualMCU
 
-  void setup() {
-    Serial.begin(9600);
-    Wire.setSDA(4);
-    Wire.setSCL(5);
-    Wire.begin();
-    if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
-      Serial.println(F("Error en la inicialización de la pantalla"));
-      for(;;);
+Cocket Nova implementación de I2C
+---------------------------------
+
+.. code-block:: C
+
+  #include "src/config.h"                   
+  #include "src/system.h"                 
+  #include "src/gpio.h"                    
+  #include "src/delay.h"                    
+  #include "src/oled.h"                     
+
+
+
+  void main(void) {
+    CLK_config();                        
+    DLY_ms(5);                          
+
+    OLED_init();                           
+
+    OLED_print("*  UNITelectronics  *");
+    OLED_print("---------------------\n");
+    OLED_print("Ready\n");
+    while(1) {
+
     }
-    display.clearDisplay();
-    display.setTextSize(1);
-    display.setTextColor(SSD1306_WHITE);
-    display.setCursor(0,0);
-    display.println(F("UNIT ELECTRONICS!"));
-    display.display();
-    delay(4000);
   }
 
-  void loop() {
-    display.clearDisplay();
-    display.setCursor(0, 10);
-    display.setTextSize(2);
-    display.print(F("Contador: "));
-    display.println(millis()/1000);
-    display.display();
-    delay(500);
-  }
+
+
+.. figure:: /_static/cocket/oled.png
+   :align: center
+   :alt: pantalla ssd1306
+   :width: 50%
+
+   Pantalla OLED Cocket Nova
 
