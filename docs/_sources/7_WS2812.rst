@@ -56,9 +56,27 @@ Control WS2812 con SDCC
 
      Tira LED WS2812
 
+
+
 .. tabs::
 
       .. tab:: SDCC
+      
+            .. raw:: html
+
+
+                  <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
+                  <tr>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Código</th>
+                        <th style="border: 1px solid #ccc; padding: 8px;">Enlace</th>
+                  </tr>
+                  <tr>
+                        <td style="border: 1px solid #ccc; padding: 8px;">WS2812 </td>
+                        <td style="border: 1px solid #ccc; padding: 8px;"><a href="https://github.com/UNIT-Electronics/CH55x_SDCC_Examples/tree/main/Software/examples/WS2812" target="_blank">Proyecto Completo </a></td>
+                  </tr>
+
+                  </table>
+      
 
             .. code-block:: C
                   

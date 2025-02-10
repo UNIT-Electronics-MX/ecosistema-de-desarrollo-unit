@@ -49,7 +49,6 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="_static/tabs.js?v=3030b3cb"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="_static/translations.js?v=efdbd0b9"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -396,14 +395,20 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-general-del-spi">Visión General del SPI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detalles-del-pinout">Detalles del Pinout</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-entre-esp32-y-rp2040">SPI entre ESP32 y RP2040</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdcard-spi">SDCard SPI</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-micropython">Biblioteca (MicroPython)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descripciones">Descripciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aplicacion-sdcard-spi">Aplicación SDCard SPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-micropython">Biblioteca (MicroPython)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspi-y-hspi">VSPI y HSPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaz-vspi">Interfaz VSPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#descripciones">Descripciones</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-arduino-ide">SPI (Arduino IDE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaz-hspi">Interfaz HSPI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdio-interfaz-de-entrada-salida-segura-digital">SDIO (Interfaz de Entrada/Salida Segura Digital)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-aplicacion">Ejemplo de aplicación</a></li>
 </ul>
 </li>
 </ul>
@@ -419,23 +424,16 @@ document.write(`
                   
   <section id="spi-interfaz-periferica-serial">
 <h1>SPI (Interfaz Periférica Serial)<a class="headerlink" href="#spi-interfaz-periferica-serial" title="Link to this heading">#</a></h1>
-<p>Explora el protocolo de comunicación SPI y aprende cómo interconectar dispositivos SPI utilizando la placa DualMCU ONE. Te guiaremos en la configuración de la comunicación SPI y en la comunicación con dispositivos SPI.</p>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>El soporte para la tarjeta de desarrollo Cocket Nova  (CH552) se encuentra en desarrollo. Por favor, mantente atento a futuras actualizaciones.</p>
+</div>
 <section id="vision-general-del-spi">
 <h2>Visión General del SPI<a class="headerlink" href="#vision-general-del-spi" title="Link to this heading">#</a></h2>
 <p>SPI (Interfaz Periférica Serial) es un bus de comunicación síncrono, full-duplex y maestro-esclavo. Se utiliza comúnmente para conectar microcontroladores a periféricos como sensores, pantallas y dispositivos de memoria. La placa de desarrollo DualMCU ONE ofrece capacidades de comunicación SPI, lo que te permite interconectar una amplia gama de dispositivos SPI.</p>
-</section>
-<section id="detalles-del-pinout">
-<h2>Detalles del Pinout<a class="headerlink" href="#detalles-del-pinout" title="Link to this heading">#</a></h2>
-<p>En la siguiente figura, puedes ver los pines SPI en la placa DualMCU ONE y los pines GPIO correspondientes en los microcontroladores ESP32 y RP2040.</p>
-<figure class="align-center" id="id1">
-<span id="figura-spi"></span><a class="reference internal image-reference" href="_images/spi_uart.png"><img alt="SPI" src="_images/spi_uart.png" style="width: 90%;" /></a>
-<figcaption>
-<p><span class="caption-number">Figura 16 </span><span class="caption-text">Pines SPI</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
 <p>A continuación, se muestra la tabla de asignación de pines para las conexiones SPI en la DualMCU ONE, detallando las conexiones GPIO correspondientes para los microcontroladores ESP32 y RP2040.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id2">
-<caption><span class="caption-number">Tabla 5 </span><span class="caption-text">Asignación de Pines SPI</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id1">
+<caption><span class="caption-number">Tabla 5 </span><span class="caption-text">Asignación de Pines SPI</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 33.3%" />
@@ -470,8 +468,8 @@ document.write(`
 <div class="admonition caution">
 <p class="admonition-title">Prudencia</p>
 <p>ESP32 y RP2040 tienen conexiones que comparten los mismos pines, por lo que se recomienda utilizar solo un microcontrolador a la vez.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id3">
-<caption><span class="caption-number">Tabla 6 </span><span class="caption-text">Pines compartidos</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id2">
+<caption><span class="caption-number">Tabla 6 </span><span class="caption-text">Pines compartidos</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 50.0%" />
 <col style="width: 50.0%" />
@@ -496,104 +494,44 @@ document.write(`
 </div>
 </div>
 </section>
-<section id="spi-entre-esp32-y-rp2040">
-<h2>SPI entre ESP32 y RP2040<a class="headerlink" href="#spi-entre-esp32-y-rp2040" title="Link to this heading">#</a></h2>
-<p>La placa DualMCU ONE fue diseñada para ser compatible con los microcontroladores ESP32 y RP2040. Por ello, es posible compartir información entre ambos microcontroladores utilizando el protocolo SPI. Para ello, utilizaremos los siguientes pines:</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id4">
-<caption><span class="caption-number">Tabla 7 </span><span class="caption-text">Conexiones SPI</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
-<colgroup>
-<col style="width: 25.0%" />
-<col style="width: 25.0%" />
-<col style="width: 25.0%" />
-<col style="width: 25.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Pin</p></th>
-<th class="head"><p>SPI RP2040</p></th>
-<th class="head"><p>Pin</p></th>
-<th class="head"><p>SPI ESP32</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>SCK</p></td>
-<td><p>14</p></td>
-<td><p>SCK</p></td>
-<td><p>18</p></td>
-</tr>
-<tr class="row-odd"><td><p>MISO</p></td>
-<td><p>12</p></td>
-<td><p>MOSI</p></td>
-<td><p>23</p></td>
-</tr>
-<tr class="row-even"><td><p>MOSI</p></td>
-<td><p>15</p></td>
-<td><p>MISO</p></td>
-<td><p>14</p></td>
-</tr>
-<tr class="row-odd"><td><p>SS</p></td>
-<td><p>13</p></td>
-<td><p>SS</p></td>
-<td><p>5</p></td>
-</tr>
-<tr class="row-even"><td><p>READY</p></td>
-<td><p>7</p></td>
-<td><p>READY</p></td>
-<td><p>33</p></td>
-</tr>
-<tr class="row-odd"><td><p>RESET</p></td>
-<td><p>16</p></td>
-<td><p>RESET</p></td>
-<td><p>RST</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="admonition caution">
-<p class="admonition-title">Prudencia</p>
-<p>La conexión RST no existe físicamente; por lo tanto, es necesario establecer una conexión externa.</p>
-</div>
-</section>
-<section id="sdcard-spi">
-<h2>SDCard SPI<a class="headerlink" href="#sdcard-spi" title="Link to this heading">#</a></h2>
+<section id="aplicacion-sdcard-spi">
+<h2>Aplicación SDCard SPI<a class="headerlink" href="#aplicacion-sdcard-spi" title="Link to this heading">#</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Advertencia</p>
 <p>Asegúrate de que la Micro SD contenga datos. Se recomienda guardar múltiples archivos de antemano para facilitar su uso.</p>
 </div>
-<figure class="align-center" id="id5">
-<span id="figura-micro-sd-card"></span><a class="reference internal image-reference" href="_images/Micro-SD-Card-Pinout.png"><img alt="Pinout de la Micro SD" src="_images/Micro-SD-Card-Pinout.png" style="width: 40%;" /></a>
-<figcaption>
-<p><span class="caption-number">Figura 17 </span><span class="caption-text">Pinout de la Micro SD</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
 <section id="biblioteca-micropython">
 <h3>Biblioteca (MicroPython)<a class="headerlink" href="#biblioteca-micropython" title="Link to this heading">#</a></h3>
 <p>La biblioteca <cite>dualmcu.py</cite> para MicroPython en ESP32 y RP2040 es compatible con la lectura y escritura en la Micro SD. La biblioteca proporciona una interfaz sencilla para leer y escribir archivos en la tarjeta SD. La biblioteca está disponible en PyPi y se puede instalar mediante el IDE Thonny.</p>
-<p><strong>Instalación</strong></p>
-<ol class="arabic simple">
-<li><p>Abre <a class="reference external" href="https://thonny.org/">Thonny</a>.</p></li>
-<li><p>Navega a <strong>Tools</strong> -&gt; <strong>Manage Packages</strong>.</p></li>
-<li><p>Busca <code class="docutils literal notranslate"><span class="pre">dualmcu</span></code> y haz clic en <strong>Install</strong>.</p></li>
-</ol>
-<p>Para más información, revisa la sección</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Biblioteca DualMCU ONE</p></li>
-</ul>
-</div></blockquote>
-<p>Alternativamente, descarga la biblioteca desde <a class="reference external" href="https://pypi.org/project/dualmcu/">dualmcu.py</a>.</p>
-<p>VSPI y HSPI
-<strong>Interfaz VSPI</strong>
-.. _figura-micro-sd-card-reader:</p>
-<figure class="align-center" id="id6">
-<a class="reference internal image-reference" href="_images/Lector-Micro-SD.jpg"><img alt="Lector externo de Micro SD" src="_images/Lector-Micro-SD.jpg" style="width: 40%;" /></a>
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
+  <tr>
+    <th style="border: 1px solid #ccc; padding: 8px;">Biblioteca</th>
+    <th style="border: 1px solid #ccc; padding: 8px;">Enlace</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ccc; padding: 8px;">ocks</td>
+    <td style="border: 1px solid #ccc; padding: 8px;"><a href="https://pypi.org/project/ocks/" target="_blank">Ejemplo de instalación</a></td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #ccc; padding: 8px;">dualmcu</td>
+    <td style="border: 1px solid #ccc; padding: 8px;"><a href="https://pypi.org/project/dualmcu/" target="_blank">Biblioteca DualMCU</a></td>
+  </tr>
+</table></section>
+<section id="vspi-y-hspi">
+<h3>VSPI y HSPI<a class="headerlink" href="#vspi-y-hspi" title="Link to this heading">#</a></h3>
+<p>La diferencia entre VSPI y HSPI radica en la velocidad de transferencia de datos. VSPI es más lento que HSPI, pero es más fácil de configurar. HSPI, por otro lado, es más rápido pero requiere una configuración más detallada.</p>
+<section id="interfaz-vspi">
+<h4>Interfaz VSPI<a class="headerlink" href="#interfaz-vspi" title="Link to this heading">#</a></h4>
+<figure class="align-center" id="id3">
+<span id="figura-micro-sd-card-reader"></span><a class="reference internal image-reference" href="_images/Lector-Micro-SD.jpg"><img alt="Lector externo de Micro SD" src="_images/Lector-Micro-SD.jpg" style="width: 40%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 18 </span><span class="caption-text">Lector externo de Micro SD</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 16 </span><span class="caption-text">Lector externo de Micro SD</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Las conexiones son las siguientes:</p>
 <p>Esta tabla ilustra las conexiones entre la tarjeta SD y los pines GPIO en los microcontroladores ESP32 y RP2040.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id7">
-<caption><span class="caption-number">Tabla 8 </span><span class="caption-text">Conexiones VSPI</span><a class="headerlink" href="#id7" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id4">
+<caption><span class="caption-number">Tabla 7 </span><span class="caption-text">Conexiones VSPI</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 14.3%" />
 <col style="width: 28.6%" />
@@ -642,13 +580,11 @@ document.write(`
 </table>
 </div>
 <section id="descripciones">
-<h4>Descripciones<a class="headerlink" href="#descripciones" title="Link to this heading">#</a></h4>
-<blockquote>
-<div><ul class="simple">
+<h5>Descripciones<a class="headerlink" href="#descripciones" title="Link to this heading">#</a></h5>
+<ul class="simple">
 <li><p>SCK (Reloj Serial)</p></li>
 <li><p>SS (Selección del Esclavo)</p></li>
 </ul>
-</div></blockquote>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span><span class="o">,</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">dualmcu</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -667,10 +603,13 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s2">&quot;/sd&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
-<p><strong>Interfaz HSPI</strong></p>
+</section>
+</section>
+<section id="interfaz-hspi">
+<h4>Interfaz HSPI<a class="headerlink" href="#interfaz-hspi" title="Link to this heading">#</a></h4>
 <p>Esta tabla detalla las conexiones entre la tarjeta SD y el microcontrolador ESP32.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id8">
-<caption><span class="caption-number">Tabla 9 </span><span class="caption-text">Conexiones HSPI</span><a class="headerlink" href="#id8" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id5">
+<caption><span class="caption-number">Tabla 8 </span><span class="caption-text">Conexiones HSPI</span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 40.0%" />
@@ -685,15 +624,15 @@ document.write(`
 <tbody>
 <tr class="row-even"><td><p>D2</p></td>
 <td></td>
-<td><p>12</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><p>D3</p></td>
 <td><p>SS (Selección del Esclavo)</p></td>
-<td><p>13</p></td>
+<td><p>15</p></td>
 </tr>
 <tr class="row-even"><td><p>CMD</p></td>
 <td><p>MOSI</p></td>
-<td><p>15</p></td>
+<td><p>13</p></td>
 </tr>
 <tr class="row-odd"><td><p>VSS</p></td>
 <td><p>GND</p></td>
@@ -713,11 +652,11 @@ document.write(`
 </tr>
 <tr class="row-odd"><td><p>D0</p></td>
 <td><p>MISO</p></td>
-<td><p>2</p></td>
+<td><p>12</p></td>
 </tr>
 <tr class="row-even"><td><p>D1</p></td>
 <td></td>
-<td><p>4</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -728,10 +667,10 @@ document.write(`
 <span class="kn">from</span> <span class="nn">dualmcu</span> <span class="kn">import</span> <span class="o">*</span>
 
 <span class="c1"># Inicializa la interfaz SPI para la tarjeta SD</span>
-<span class="n">spi</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">SPI</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span> <span class="n">polarity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sck</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span> <span class="n">mosi</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span> <span class="n">miso</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">spi</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">SPI</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span> <span class="n">polarity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sck</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span> <span class="n">mosi</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">13</span><span class="p">),</span> <span class="n">miso</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">12</span><span class="p">))</span>
 
 <span class="c1"># Inicializa la tarjeta SD</span>
-<span class="n">sd</span> <span class="o">=</span> <span class="n">SDCard</span><span class="p">(</span><span class="n">spi</span><span class="p">,</span> <span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">13</span><span class="p">))</span>
+<span class="n">sd</span> <span class="o">=</span> <span class="n">SDCard</span><span class="p">(</span><span class="n">spi</span><span class="p">,</span> <span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">15</span><span class="p">))</span>
 
 <span class="c1"># Monta el sistema de archivos</span>
 <span class="n">vfs</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">VfsFat</span><span class="p">(</span><span class="n">sd</span><span class="p">)</span>
@@ -746,14 +685,288 @@ document.write(`
 </div>
 </section>
 </section>
-<section id="spi-arduino-ide">
-<h3>SPI (Arduino IDE)<a class="headerlink" href="#spi-arduino-ide" title="Link to this heading">#</a></h3>
-<p>Arduino IDE es compatible tanto con la lectura como con la escritura en la tarjeta Micro SD. La biblioteca proporciona una interfaz sencilla para leer y escribir archivos en la tarjeta SD.</p>
-<div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">VSPI</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</section>
+<section id="sdio-interfaz-de-entrada-salida-segura-digital">
+<h2>SDIO (Interfaz de Entrada/Salida Segura Digital)<a class="headerlink" href="#sdio-interfaz-de-entrada-salida-segura-digital" title="Link to this heading">#</a></h2>
+<p>SDIO (Secure Digital Input/Output) es una interfaz de comunicación de alta velocidad que permite la transferencia de datos entre un microcontrolador y una tarjeta SD. La placa de desarrollo DualMCU ONE ofrece soporte para la interfaz SDIO, lo que te permite leer y escribir datos en una tarjeta SD de forma rápida y eficiente.</p>
+<p>La interfaz SDIO es una interfaz de comunicación de alta velocidad que permite la transferencia de datos entre un microcontrolador y una tarjeta SD. La placa de desarrollo DualMCU ONE ofrece soporte para la interfaz SDIO, lo que te permite leer y escribir datos en una tarjeta SD de forma rápida y eficiente.</p>
+<figure class="align-center" id="id6">
+<span id="figura-micro-sd-card"></span><a class="reference internal image-reference" href="_images/Micro-SD-Card-Pinout.png"><img alt="Pinout de la Micro SD" src="_images/Micro-SD-Card-Pinout.png" style="width: 40%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 17 </span><span class="caption-text">Pinout de la Micro SD</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Esta tabla detalla las conexiones entre la tarjeta SD y el microcontrolador ESP32.</p>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id7">
+<caption><span class="caption-number">Tabla 9 </span><span class="caption-text">Conexiones SDIO</span><a class="headerlink" href="#id7" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Nombre del Pin</p></th>
+<th class="head"><p>Pines Correspondientes en Modo SPI</p></th>
+<th class="head"><p>Número GPIO (Slot 1)</p></th>
+<th class="head"><p>Número GPIO (Slot 2)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CLK</p></td>
+<td><p>SCLK</p></td>
+<td><p>6</p></td>
+<td><p>14</p></td>
+</tr>
+<tr class="row-odd"><td><p>CMD</p></td>
+<td><p>MOSI</p></td>
+<td><p>11</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-even"><td><p>DAT0</p></td>
+<td><p>MISO</p></td>
+<td><p>7</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAT1</p></td>
+<td><p>Interrupción</p></td>
+<td><p>8</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-even"><td><p>DAT2</p></td>
+<td><p>Sin Conexión (pullup)</p></td>
+<td><p>9</p></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-odd"><td><p>DAT3</p></td>
+<td><p>CS</p></td>
+<td><p>10</p></td>
+<td><p>13</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="ejemplo-de-aplicacion">
+<h3>Ejemplo de aplicación<a class="headerlink" href="#ejemplo-de-aplicacion" title="Link to this heading">#</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Sketch for testing the ESP32 HSPI interface on the DualMCU ONE.</span>
+<span class="cm"> * Connect the SD card to the following pins:</span>
+<span class="cm"> *</span>
+<span class="cm"> * SD Card | ESP32</span>
+<span class="cm"> *    D2       12</span>
+<span class="cm"> *    D3       13</span>
+<span class="cm"> *    CMD      15</span>
+<span class="cm"> *    VSS      GND</span>
+<span class="cm"> *    VDD      3.3V</span>
+<span class="cm"> *    CLK      14</span>
+<span class="cm"> *    VSS      GND</span>
+<span class="cm"> *    D0       2  (add 1K pull up after flashing)</span>
+<span class="cm"> *    D1       4</span>
+<span class="cm"> */</span>
+
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;FS.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;SD_MMC.h&quot;</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">listDir</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">dirname</span><span class="p">,</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">levels</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Listing directory: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">dirname</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">File</span><span class="w"> </span><span class="n">root</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">dirname</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">root</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Failed to open directory&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">root</span><span class="p">.</span><span class="n">isDirectory</span><span class="p">()){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Not a directory&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="n">openNextFile</span><span class="p">();</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">file</span><span class="p">){</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">isDirectory</span><span class="p">()){</span>
+<span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;  DIR : &quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">name</span><span class="p">());</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">levels</span><span class="p">){</span>
+<span class="w">                </span><span class="n">listDir</span><span class="p">(</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">path</span><span class="p">(),</span><span class="w"> </span><span class="n">levels</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;  FILE: &quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">name</span><span class="p">());</span>
+<span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;  SIZE: &quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">root</span><span class="p">.</span><span class="n">openNextFile</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">createDir</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Creating Dir: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Dir created&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;mkdir failed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">removeDir</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Removing Dir: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">rmdir</span><span class="p">(</span><span class="n">path</span><span class="p">)){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Dir removed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;rmdir failed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">readFile</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Reading file: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Failed to open file for reading&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;Read from file: &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">available</span><span class="p">()){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">read</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">writeFile</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">message</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Writing file: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">FILE_WRITE</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Failed to open file for writing&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">message</span><span class="p">)){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;File written&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Write failed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">appendFile</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">message</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Appending to file: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">FILE_APPEND</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Failed to open file for appending&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">message</span><span class="p">)){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Message appended&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Append failed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">renameFile</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path1</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path2</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Renaming file %s to %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path1</span><span class="p">,</span><span class="w"> </span><span class="n">path2</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">path1</span><span class="p">,</span><span class="w"> </span><span class="n">path2</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;File renamed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Rename failed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">deleteFile</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Deleting file: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;File deleted&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Delete failed&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">testFileIO</span><span class="p">(</span><span class="n">fs</span><span class="o">::</span><span class="n">FS</span><span class="w"> </span><span class="o">&amp;</span><span class="n">fs</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">path</span><span class="p">){</span>
+<span class="w">    </span><span class="n">File</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">512</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">file</span><span class="p">){</span>
+<span class="w">        </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+<span class="w">        </span><span class="kt">size_t</span><span class="w"> </span><span class="n">flen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">        </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="w">        </span><span class="k">while</span><span class="p">(</span><span class="n">len</span><span class="p">){</span>
+<span class="w">            </span><span class="kt">size_t</span><span class="w"> </span><span class="n">toRead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">len</span><span class="p">;</span>
+<span class="w">            </span><span class="k">if</span><span class="p">(</span><span class="n">toRead</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">512</span><span class="p">){</span>
+<span class="w">                </span><span class="n">toRead</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">512</span><span class="p">;</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">            </span><span class="n">file</span><span class="p">.</span><span class="n">read</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">toRead</span><span class="p">);</span>
+<span class="w">            </span><span class="n">len</span><span class="w"> </span><span class="o">-=</span><span class="w"> </span><span class="n">toRead</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">        </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%u bytes read for %u ms</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">flen</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">);</span>
+<span class="w">        </span><span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Failed to open file for reading&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+
+<span class="w">    </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="w"> </span><span class="n">FILE_WRITE</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">file</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Failed to open file for writing&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">size_t</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="w">    </span><span class="n">start</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">();</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">&lt;</span><span class="mi">2048</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="n">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="mi">512</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="n">end</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">millis</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="p">;</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%u bytes written for %u ms</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2048</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">512</span><span class="p">,</span><span class="w"> </span><span class="n">end</span><span class="p">);</span>
+<span class="w">    </span><span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">setup</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">115200</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">SD_MMC</span><span class="p">.</span><span class="n">begin</span><span class="p">()){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Card Mount Failed&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="n">cardType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SD_MMC</span><span class="p">.</span><span class="n">cardType</span><span class="p">();</span>
+
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">cardType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CARD_NONE</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;No SD_MMC card attached&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">&quot;SD_MMC Card Type: &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">cardType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CARD_MMC</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;MMC&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">cardType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CARD_SD</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;SDSC&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">cardType</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">CARD_SDHC</span><span class="p">){</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;SDHC&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">&quot;UNKNOWN&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kt">uint64_t</span><span class="w"> </span><span class="n">cardSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SD_MMC</span><span class="p">.</span><span class="n">cardSize</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;SD_MMC Card Size: %lluMB</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">cardSize</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">listDir</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">createDir</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/mydir&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">listDir</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">removeDir</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/mydir&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">listDir</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<span class="w">    </span><span class="n">writeFile</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/hello.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Hello &quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">appendFile</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/hello.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;World!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">readFile</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/hello.txt&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">deleteFile</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/foo.txt&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">renameFile</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/hello.txt&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/foo.txt&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">readFile</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/foo.txt&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">testFileIO</span><span class="p">(</span><span class="n">SD_MMC</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;/test.txt&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Total space: %lluMB</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SD_MMC</span><span class="p">.</span><span class="n">totalBytes</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">));</span>
+<span class="w">    </span><span class="n">Serial</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Used space: %lluMB</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">SD_MMC</span><span class="p">.</span><span class="n">usedBytes</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="mi">1024</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1024</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">loop</span><span class="p">(){</span>
 </pre></div>
 </div>
-</div></div>
+<p>}</p>
 </section>
 </section>
 </section>
@@ -804,14 +1017,20 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-general-del-spi">Visión General del SPI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detalles-del-pinout">Detalles del Pinout</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-entre-esp32-y-rp2040">SPI entre ESP32 y RP2040</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdcard-spi">SDCard SPI</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-micropython">Biblioteca (MicroPython)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#descripciones">Descripciones</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aplicacion-sdcard-spi">Aplicación SDCard SPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-micropython">Biblioteca (MicroPython)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspi-y-hspi">VSPI y HSPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaz-vspi">Interfaz VSPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#descripciones">Descripciones</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spi-arduino-ide">SPI (Arduino IDE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaz-hspi">Interfaz HSPI</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdio-interfaz-de-entrada-salida-segura-digital">SDIO (Interfaz de Entrada/Salida Segura Digital)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-aplicacion">Ejemplo de aplicación</a></li>
 </ul>
 </li>
 </ul>
