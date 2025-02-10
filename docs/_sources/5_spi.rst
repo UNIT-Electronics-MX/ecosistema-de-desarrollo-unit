@@ -290,6 +290,16 @@ Esta tabla detalla las conexiones entre la tarjeta SD y el microcontrolador ESP3
 Ejemplo de aplicación
 ~~~~~~~~~~~~~~~~~~~~~~
 
+
+.. _figura-micro-sd-card-reader:
+
+.. figure:: /_static/dualmcu/output_serial.png
+  :align: center
+  :alt: Lector de Micro SD
+  :width: 90%
+
+  Lector de Micro SD
+
 .. code-block:: cpp
 
   /* Sketch for testing the ESP32 HSPI interface on the DualMCU ONE.
@@ -510,3 +520,5 @@ Ejemplo de aplicación
   void loop(){
 
 }
+
+

@@ -4,10 +4,7 @@ MicroPython
 MicroPython es una implementación ligera y eficiente del lenguaje de programación Python 3 que está optimizada para ejecutarse en microcontroladores. Está diseñado para ser utilizado en entornos restringidos, lo que lo hace adecuado para el desarrollo de sistemas embebidos. MicroPython proporciona un conjunto rico de bibliotecas y módulos que permiten a los desarrolladores interactuar con componentes de hardware y periféricos, lo que lo convierte en una opción ideal para proyectos de IoT y prototipos.
 
 
-Comenzando con MicroPython
---------------------------
-
-Comenzar con MicroPython es fácil. La siguiente tabla enumera las placas que son compatibles con MicroPython.
+La siguiente tabla enumera las placas que son compatibles con MicroPython.
 
 .. TABLA DE PLACAS COMPATIBLES CON MICROPYTHON
 
