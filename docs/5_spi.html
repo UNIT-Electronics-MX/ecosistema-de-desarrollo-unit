@@ -395,7 +395,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-general-del-spi">Visión General del SPI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aplicacion-sdcard-spi">Aplicación SDCard SPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdcard-spi">SDCard SPI</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-micropython">Biblioteca (MicroPython)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspi-y-hspi">VSPI y HSPI</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaz-vspi">Interfaz VSPI</a><ul class="nav section-nav flex-column">
@@ -465,37 +465,9 @@ document.write(`
 </tbody>
 </table>
 </div>
-<div class="admonition caution">
-<p class="admonition-title">Prudencia</p>
-<p>ESP32 y RP2040 tienen conexiones que comparten los mismos pines, por lo que se recomienda utilizar solo un microcontrolador a la vez.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id3">
-<caption><span class="caption-number">Tabla 6 </span><span class="caption-text">Pines compartidos</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
-<colgroup>
-<col style="width: 50.0%" />
-<col style="width: 50.0%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>GPIO ESP32</p></th>
-<th class="head"><p>GPIO RP2040</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>5</p></td>
-<td><p>13</p></td>
-</tr>
-<tr class="row-odd"><td><p>18</p></td>
-<td><p>14</p></td>
-</tr>
-<tr class="row-even"><td><p>23</p></td>
-<td><p>12</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </section>
-<section id="aplicacion-sdcard-spi">
-<h2>Aplicación SDCard SPI<a class="headerlink" href="#aplicacion-sdcard-spi" title="Link to this heading">#</a></h2>
+<section id="sdcard-spi">
+<h2>SDCard SPI<a class="headerlink" href="#sdcard-spi" title="Link to this heading">#</a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Advertencia</p>
 <p>Asegúrate de que la Micro SD contenga datos. Se recomienda guardar múltiples archivos de antemano para facilitar su uso.</p>
@@ -522,16 +494,16 @@ document.write(`
 <p>La diferencia entre VSPI y HSPI radica en la velocidad de transferencia de datos. VSPI es más lento que HSPI, pero es más fácil de configurar. HSPI, por otro lado, es más rápido pero requiere una configuración más detallada.</p>
 <section id="interfaz-vspi">
 <h4>Interfaz VSPI<a class="headerlink" href="#interfaz-vspi" title="Link to this heading">#</a></h4>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id3">
 <span id="figura-micro-sd-card-reader"></span><a class="reference internal image-reference" href="_images/Lector-Micro-SD.jpg"><img alt="Lector externo de Micro SD" src="_images/Lector-Micro-SD.jpg" style="width: 40%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 16 </span><span class="caption-text">Lector externo de Micro SD</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 16 </span><span class="caption-text">Lector externo de Micro SD</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Las conexiones son las siguientes:</p>
 <p>Esta tabla ilustra las conexiones entre la tarjeta SD y los pines GPIO en los microcontroladores ESP32 y RP2040.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id5">
-<caption><span class="caption-number">Tabla 7 </span><span class="caption-text">Conexiones VSPI</span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id4">
+<caption><span class="caption-number">Tabla 6 </span><span class="caption-text">Conexiones VSPI</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 14.3%" />
 <col style="width: 28.6%" />
@@ -608,8 +580,8 @@ document.write(`
 <section id="interfaz-hspi">
 <h4>Interfaz HSPI<a class="headerlink" href="#interfaz-hspi" title="Link to this heading">#</a></h4>
 <p>Esta tabla detalla las conexiones entre la tarjeta SD y el microcontrolador ESP32.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id6">
-<caption><span class="caption-number">Tabla 8 </span><span class="caption-text">Conexiones HSPI</span><a class="headerlink" href="#id6" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id5">
+<caption><span class="caption-number">Tabla 7 </span><span class="caption-text">Conexiones HSPI</span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 40.0%" />
@@ -690,15 +662,15 @@ document.write(`
 <h2>SDIO (Interfaz de Entrada/Salida Segura Digital)<a class="headerlink" href="#sdio-interfaz-de-entrada-salida-segura-digital" title="Link to this heading">#</a></h2>
 <p>SDIO (Secure Digital Input/Output) es una interfaz de comunicación de alta velocidad que permite la transferencia de datos entre un microcontrolador y una tarjeta SD. La placa de desarrollo DualMCU ONE ofrece soporte para la interfaz SDIO, lo que te permite leer y escribir datos en una tarjeta SD de forma rápida y eficiente.</p>
 <p>La interfaz SDIO es una interfaz de comunicación de alta velocidad que permite la transferencia de datos entre un microcontrolador y una tarjeta SD. La placa de desarrollo DualMCU ONE ofrece soporte para la interfaz SDIO, lo que te permite leer y escribir datos en una tarjeta SD de forma rápida y eficiente.</p>
-<figure class="align-center" id="id7">
+<figure class="align-center" id="id6">
 <span id="figura-micro-sd-card"></span><a class="reference internal image-reference" href="_images/Micro-SD-Card-Pinout.png"><img alt="Pinout de la Micro SD" src="_images/Micro-SD-Card-Pinout.png" style="width: 40%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 17 </span><span class="caption-text">Pinout de la Micro SD</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 17 </span><span class="caption-text">Pinout de la Micro SD</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Esta tabla detalla las conexiones entre la tarjeta SD y el microcontrolador ESP32.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id8">
-<caption><span class="caption-number">Tabla 9 </span><span class="caption-text">Conexiones SDIO</span><a class="headerlink" href="#id8" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id7">
+<caption><span class="caption-number">Tabla 8 </span><span class="caption-text">Conexiones SDIO</span><a class="headerlink" href="#id7" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 25.0%" />
 <col style="width: 25.0%" />
@@ -748,10 +720,10 @@ document.write(`
 </div>
 <section id="ejemplo-de-aplicacion">
 <h3>Ejemplo de aplicación<a class="headerlink" href="#ejemplo-de-aplicacion" title="Link to this heading">#</a></h3>
-<figure class="align-center" id="id9">
+<figure class="align-center" id="id8">
 <span id="id1"></span><a class="reference internal image-reference" href="_images/output_serial.png"><img alt="Lector de Micro SD" src="_images/output_serial.png" style="width: 90%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 18 </span><span class="caption-text">Lector de Micro SD</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 18 </span><span class="caption-text">Lector de Micro SD</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Sketch for testing the ESP32 HSPI interface on the DualMCU ONE.</span>
@@ -1023,7 +995,7 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vision-general-del-spi">Visión General del SPI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aplicacion-sdcard-spi">Aplicación SDCard SPI</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sdcard-spi">SDCard SPI</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-micropython">Biblioteca (MicroPython)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vspi-y-hspi">VSPI y HSPI</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interfaz-vspi">Interfaz VSPI</a><ul class="nav section-nav flex-column">

@@ -36,25 +36,8 @@ A continuación, se muestra la tabla de asignación de pines para las conexiones
     - 5
     - 17
 
-.. caution::
 
-  ESP32 y RP2040 tienen conexiones que comparten los mismos pines, por lo que se recomienda utilizar solo un microcontrolador a la vez.
-  
-  .. list-table:: Pines compartidos
-    :widths: 20 20 
-    :header-rows: 1
-    :align: center
-
-    * - GPIO ESP32
-      - GPIO RP2040
-    * - 5
-      - 13
-    * - 18
-      - 14
-    * - 23
-      - 12
-
-Aplicación SDCard SPI
+SDCard SPI
 ---------------------
 
 .. warning::
