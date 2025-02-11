@@ -170,6 +170,7 @@
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contenido</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">MicroPython</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="duino.html">Arduino IDE</a></li>
 
 <li class="toctree-l1"><a class="reference internal" href="0_1_jst.html">Conector JST SH 1.0mm 4 pines</a></li>
@@ -394,11 +395,23 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">MicroPython</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-de-micropython">Características de MicroPython</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comenzando-con-micropython">Comenzando con MicroPython</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-y-modulos-de-micropython">Bibliotecas y Módulos de MicroPython</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides-y-herramientas-de-micropython">IDEs y Herramientas de MicroPython</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-usando-la-biblioteca-mip">Guía de Instalación Usando la Biblioteca MIP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-dualmcu">Biblioteca DualMCU</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uso">Uso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-disponibles">Bibliotecas disponibles</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -474,6 +487,111 @@ document.write(`
 </ul>
 </section>
 </section>
+<section id="guia-de-instalacion-usando-la-biblioteca-mip">
+<h1>Guía de Instalación Usando la Biblioteca MIP<a class="headerlink" href="#guia-de-instalacion-usando-la-biblioteca-mip" title="Link to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>El soporte directo para mip en RP2040 no está disponible. Se utiliza la biblioteca <cite>mip</cite> para instalar la biblioteca <cite>max1704x.py</cite>.</p>
+</div>
+<ul class="simple">
+<li><p>Dispositivo ESP32</p></li>
+<li><p>IDE Thonny</p></li>
+<li><p>Credenciales de Wi-Fi (SSID y Contraseña)</p></li>
+</ul>
+<p>Siga los pasos a continuación para instalar la biblioteca <cite>max1704x.py</cite>:</p>
+<p>Copie y ejecute el siguiente código en Thonny para conectar su ESP32 a una red Wi-Fi:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mip</span>
+<span class="kn">import</span> <span class="nn">network</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+   <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+   <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+   <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+
+   <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Conectado a la red Wi-Fi&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No se pudo conectar a la red Wi-Fi&#39;</span><span class="p">)</span>
+   <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="n">ssid</span> <span class="o">=</span> <span class="s2">&quot;tu_ssid&quot;</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;tu_contraseña&quot;</span>
+
+<span class="n">ip_address</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
+<span class="n">mip</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/UNIT-Electronics/MAX1704X_lib/refs/heads/main/Software/MicroPython/example/max1704x.py&#39;</span><span class="p">)</span>
+<span class="n">mip</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/Cesarbautista10/Libraries_compatibles_with_micropython/refs/heads/main/Libs/oled.py&#39;</span><span class="p">)</span>
+<span class="n">mip</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/Cesarbautista10/Libraries_compatibles_with_micropython/refs/heads/main/Libs/sdcard.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="biblioteca-dualmcu">
+<h2>Biblioteca DualMCU<a class="headerlink" href="#biblioteca-dualmcu" title="Link to this heading">#</a></h2>
+<p>En primer lugar, debe instalar el IDE Thonny. Puede descargarlo desde el <a class="reference external" href="https://thonny.org/">sitio web de Thonny</a>.</p>
+<ol class="arabic simple">
+<li><p>Abra <a class="reference external" href="https://thonny.org/">Thonny</a>.</p></li>
+<li><p>Navegue a <strong>Herramientas</strong> -&gt; <strong>Administrar paquetes</strong>.</p></li>
+<li><p>Busque <code class="docutils literal notranslate"><span class="pre">dualmcu</span></code> y haga clic en <strong>Instalar</strong>.</p></li>
+</ol>
+<figure class="align-center" id="id1">
+<span id="figure-dualmcu-libary"></span><a class="reference internal image-reference" href="_images/dualmcu_library.png"><img alt="Biblioteca DualMCU" src="_images/dualmcu_library.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 1 </span><span class="caption-text">Biblioteca DualMCU</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple" start="4">
+<li><p>Biblioteca instalada correctamente.</p></li>
+</ol>
+<figure class="align-center" id="id2">
+<span id="figure-dualmcu-libary-success"></span><a class="reference internal image-reference" href="_images/dualmcu_library_success.png"><img alt="Biblioteca DualMCU" src="_images/dualmcu_library_success.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 2 </span><span class="caption-text">Biblioteca DualMCU instalada correctamente</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>Alternativamente, descargue la biblioteca desde <a class="reference external" href="https://pypi.org/project/dualmcu/">dualmcu.py</a>.</p>
+<section id="uso">
+<h3>Uso<a class="headerlink" href="#uso" title="Link to this heading">#</a></h3>
+<p>La biblioteca proporciona un conjunto de herramientas para ayudar a los desarrolladores a trabajar con la placa DualMCU ONE. Las siguientes son las principales características de la biblioteca:</p>
+<ul class="simple">
+<li><p><strong>Soporte I2C</strong>: La biblioteca ofrece soporte para el protocolo de comunicación I2C, facilitando la conexión con una amplia gama de sensores y dispositivos.</p></li>
+<li><p><strong>Compatibilidad con Shields de Arduino</strong>: La biblioteca es compatible con Shields de Arduino, lo que permite utilizar una gran variedad de shields y accesorios con la placa DualMCU ONE.</p></li>
+<li><p><strong>Soporte para SDcard</strong>: La biblioteca ofrece soporte para tarjetas SD, permitiendo a los desarrolladores leer y escribir datos en tarjetas SD de forma sencilla.</p></li>
+</ul>
+<p>Ejemplos de uso de la biblioteca:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+<span class="kn">from</span> <span class="nn">dualmcu</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">SoftI2C</span><span class="p">(</span><span class="n">scl</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">22</span><span class="p">),</span> <span class="n">sda</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">21</span><span class="p">))</span>
+
+<span class="n">oled</span> <span class="o">=</span> <span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;UNIT&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;ELECTRONICS&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="bibliotecas-disponibles">
+<h3>Bibliotecas disponibles<a class="headerlink" href="#bibliotecas-disponibles" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pypi.org/project/dualmcu/">Dualmcu</a> : Esta biblioteca ofrece un conjunto de herramientas para ayudar a los desarrolladores a trabajar con la placa DualMCU ONE. La biblioteca se mantiene y actualiza activamente para brindar la mejor experiencia a los desarrolladores que utilizan la placa DualMCU ONE. Para más información y actualizaciones, visite el <a href="#id3"><span class="problematic" id="id4">`repositorio de GitHub dualmcu`__</span></a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/ocks/">Ocks</a> : Esta biblioteca proporciona soporte para el protocolo de comunicación I2C.</p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/sdcard-lib/">SDcard-lib</a> : Esta biblioteca ofrece soporte para tarjetas SD, permitiendo a los desarrolladores leer y escribir datos en tarjetas SD; todos los derechos pertenecen al autor original.</p></li>
+</ul>
+<p>La biblioteca se mantiene y actualiza activamente para brindar la mejor experiencia a los desarrolladores que utilizan la placa DualMCU ONE. Para más información y actualizaciones, visite el <a href="#id3"><span class="problematic" id="id5">`repositorio de GitHub dualmcu`__</span></a></p>
+</section>
+</section>
+</section>
 
 
                 </article>
@@ -520,11 +638,23 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">MicroPython</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-de-micropython">Características de MicroPython</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comenzando-con-micropython">Comenzando con MicroPython</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-y-modulos-de-micropython">Bibliotecas y Módulos de MicroPython</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides-y-herramientas-de-micropython">IDEs y Herramientas de MicroPython</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-usando-la-biblioteca-mip">Guía de Instalación Usando la Biblioteca MIP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-dualmcu">Biblioteca DualMCU</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#uso">Uso</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-disponibles">Bibliotecas disponibles</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   </nav></div>
 
 </div></div>
