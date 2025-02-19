@@ -73,6 +73,14 @@ MicroPython y Arduino IDE
                                 delay(500);
                      }
 
+.. only:: html
+
+    .. figure:: /_static/dualmcu/blink.gif
+        :align: center
+        :alt: figura-gif
+        :width: 60%
+
+
 Arduino IDE y SDCC 
 ~~~~~~~~~~~~~~~~~~
 
