@@ -102,7 +102,7 @@ Hay varios Entornos de Desarrollo Integrados (IDEs) y herramientas disponibles p
 ----------------------------------------
 
 
-Guía de Instalación Usando la Biblioteca MIP
+Guía de Instalación de bilibiotecas con MIP
 ============================================
 
 .. note::
