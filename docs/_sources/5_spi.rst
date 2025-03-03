@@ -48,24 +48,24 @@ La placa de desarrollo DualMCU ONE está equipada con dos microcontroladores, el
   :align: center
 
   * - ESP32
+    - GPIO
     - RP2040
     - GPIO
-    - GPIO
   * - SCK
-    - SCK
     - 18
+    - SCK
     - 14
   * - MISO
-    - MOSI
     - 23
+    - MOSI
     - 15
   * - MOSI
-    - MISO
     - 19
+    - MISO
     - 12
   * - SS
-    - SS
     - 5
+    - SS
     - 13
 
 .. tabs:: 
