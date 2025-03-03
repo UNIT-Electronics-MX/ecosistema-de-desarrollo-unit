@@ -438,8 +438,8 @@ document.write(`
 <h2>Visión General del SPI<a class="headerlink" href="#vision-general-del-spi" title="Link to this heading">#</a></h2>
 <p>SPI (Interfaz Periférica Serial) es un bus de comunicación síncrono, full-duplex y maestro-esclavo. Se utiliza comúnmente para conectar microcontroladores a periféricos como sensores, pantallas y dispositivos de memoria. La placa de desarrollo DualMCU ONE ofrece capacidades de comunicación SPI, lo que te permite interconectar una amplia gama de dispositivos SPI.</p>
 <p>A continuación, se muestra la tabla de asignación de pines para las conexiones SPI en la DualMCU ONE, detallando las conexiones GPIO correspondientes para los microcontroladores ESP32 y RP2040.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id14">
-<caption><span class="caption-number">Tabla 8 </span><span class="caption-text">Asignación de Pines SPI</span><a class="headerlink" href="#id14" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id2">
+<caption><span class="caption-number">Tabla 8 </span><span class="caption-text">Asignación de Pines SPI</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 33.3%" />
 <col style="width: 33.3%" />
@@ -474,8 +474,8 @@ document.write(`
 <section id="dualmcu-one-rp2040-y-esp32">
 <h3>DualMCU ONE RP2040 y ESP32<a class="headerlink" href="#dualmcu-one-rp2040-y-esp32" title="Link to this heading">#</a></h3>
 <p>La placa de desarrollo DualMCU ONE está equipada con dos microcontroladores, el ESP32 y el RP2040. Ambos microcontroladores ofrecen soporte para la comunicación SPI, lo que te permite conectar dispositivos SPI a la placa de desarrollo.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id15">
-<caption><span class="caption-number">Tabla 9 </span><span class="caption-text">Configuración SPI cruzado entre ESP32 y RP2040</span><a class="headerlink" href="#id15" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id3">
+<caption><span class="caption-number">Tabla 9 </span><span class="caption-text">Configuración SPI cruzado entre ESP32 y RP2040</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 25.0%" />
 <col style="width: 25.0%" />
@@ -514,164 +514,177 @@ document.write(`
 </table>
 </div>
 <div class="sphinx-tabs docutils container">
-<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0"></button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1"></button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><blockquote>
-<div><p>from machine import Pin, SPI
-import time</p>
-<p># RP2040 pin configuration
-rp2040_cs = Pin(13, Pin.OUT)   # Chip Select (CS)
-spi = SPI(1, baudrate=1000000, polarity=0, phase=0, sck=Pin(14), mosi=Pin(15), miso=Pin(12))</p>
-<p># rp2040_cs = Pin(21, Pin.OUT)   # Chip Select (CS)
-# spi = SPI(0, baudrate=100000, polarity=0, phase=0, sck=Pin(18), mosi=Pin(19), miso=Pin(20))</p>
-<dl>
-<dt>def spi_send_command(command, response_length=3):</dt><dd><p># Seleccionar el dispositivo SPI (bajar CS)
-rp2040_cs.value(0)
-time.sleep_us(10)  # Breve pausa para estabilizar CS</p>
-<p># Asegurarte de que ambos buffers (envío y respuesta) sean del mismo tamaño
-send_buffer = bytearray(response_length)
-response = bytearray(response_length)  # Buffer de respuesta de 2 bytes, igual que send_buffer</p>
-<p># Copiar el comando en el buffer de envío (solo el primer byte)
-send_buffer[0] = command[0]</p>
-<p># Enviar el comando y recibir la respuesta
-spi.write_readinto(send_buffer, response)</p>
-<p># Deseleccionar el dispositivo SPI (subir CS)
-time.sleep_us(1)
-rp2040_cs.value(1)</p>
-<p>return response</p>
-</dd>
-<dt>def main():</dt><dd><p># Lista de comandos para enviar al ESP32 (cada comando es de 1 byte)
-commands = [</p>
-<blockquote>
-<div><p>b”x01”,  # Comando 0x01: Solicitar estado general de memoria
-b”x02”,  # Comando 0x02: Solicitar memoria libre
-b”x03”,  # Comando 0x03: Solicitar estado de los registros
-b”x21”   # Comando 0x04: Solicitar temperatura</p>
-</div></blockquote>
-<p>]</p>
-<dl>
-<dt>while True:</dt><dd><dl>
-<dt>for command_to_send in commands:</dt><dd><p># Enviar el comando y recibir la respuesta
-response = spi_send_command(command_to_send, response_length=3)  # Ajustado para 2 bytes</p>
-<p># Imprimir el comando enviado y la respuesta recibida
-print(f»Sent command: {command_to_send.hex()} | Received response:», response)</p>
-<p>time.sleep(1)  # Tiempo de espera entre comandos</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd>
-</dl>
-<p>main()</p>
-</div></blockquote>
-</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><blockquote>
-<div><p>#include &lt;stdio.h&gt;
-#include &lt;string.h&gt;
-#include «driver/spi_slave.h»
-#include «driver/gpio.h»
-#include «esp_log.h»
-#include «esp_system.h»  // Para funciones del sistema como esp_get_free_heap_size
-#include «esp_heap_caps.h»  // Para asignación de memoria compatible con DMA</p>
-<p>// ESP32 WROOM 32E</p>
-<p>#define PIN_NUM_MISO 23
-#define PIN_NUM_MOSI 14
-#define PIN_NUM_CLK  18
-#define PIN_NUM_CS   5
-#define SPIHOST    HSPI_HOST
-#define ESP32_state  0</p>
-<p>#define CMD_START_RX 0XE0
-#define CMD_END_RX 0XEE</p>
-<p>static const char <a href="#id1"><span class="problematic" id="id2">*</span></a>TAG = «SPI_SLAVE»;</p>
-<p>// Buffer de 2 bytes para la transmisión SPI
-uint8_t PK_BUFF[2];</p>
-<p>// Función para procesar el comando recibido por SPI
-void process_command(uint8_t <a href="#id3"><span class="problematic" id="id4">*</span></a>command) {</p>
-<blockquote>
-<div><p>// delete start and end command choose the command
-// command length is 1 byte</p>
-<p>ESP_LOGI(TAG, «Received command: %02X», command[0]);</p>
-<p>// Simular una respuesta según el comando recibido
-switch (command[0]) {</p>
-<blockquote>
-<div><dl>
-<dt>case 0x01:  // Comando 0x01: Retornar estado de la memoria</dt><dd><p>PK_BUFF[0] = 0x53;  // Ejemplo de estado de memoria
-PK_BUFF[1] = 0x4f;
-break;</p>
-</dd>
-<dt>case 0x02:  // Comando 0x02: Retornar memoria disponible</dt><dd><p>PK_BUFF[0] = 0x59;  // Simular datos
-PK_BUFF[1] = 0x2D;
-break;</p>
-</dd>
-<dt>case 0x03:  // Comando 0x03: Retornar estado de registros</dt><dd><p>PK_BUFF[0] = 0x28;
-PK_BUFF[1] = 0x29;
-break;</p>
-</dd>
-<dt>case 0x21:  // Comando 0x04: Name ascii 32, S3, C6</dt><dd><p>PK_BUFF[0] = 0x4f;
-PK_BUFF[1] = 0x4b;</p>
-<p>break;</p>
-</dd>
-<dt>default:</dt><dd><p>PK_BUFF[0] = 0x00;  // Comando desconocido
-PK_BUFF[1] = 0x00;
-break;</p>
-</dd>
-</dl>
-</div></blockquote>
-<p>}</p>
-</div></blockquote>
-<p>}</p>
-<dl>
-<dt>void app_main(void) {</dt><dd><p>// Configuración del bus SPI
-spi_bus_config_t buscfg = {</p>
-<blockquote>
-<div><p>.mosi_io_num = PIN_NUM_MOSI,
-.miso_io_num = PIN_NUM_MISO,
-.sclk_io_num = PIN_NUM_CLK,
-.quadwp_io_num = -1,
-.quadhd_io_num = -1,</p>
-</div></blockquote>
-<p>};</p>
-<p>// Configuración de la interfaz SPI como esclavo
-spi_slave_interface_config_t slvcfg = {</p>
-<blockquote>
-<div><p>.spics_io_num = PIN_NUM_CS,
-.flags = 0,
-.queue_size = 6,  // Aumentar el tamaño de la cola para mejorar el rendimiento
-.mode = 0,</p>
-</div></blockquote>
-<p>};</p>
-<p>// Inicializar el bus SPI como esclavo
-esp_err_t ret = spi_slave_initialize(SPIHOST, &amp;buscfg, &amp;slvcfg, SPI_DMA_CH_AUTO);
-ESP_ERROR_CHECK(ret);</p>
-<p>// Asignar buffers de 4 bytes para enviar y recibir datos
-uint8_t <a href="#id5"><span class="problematic" id="id6">*</span></a>sendbuf = (uint8_t <a href="#id7"><span class="problematic" id="id8">*</span></a>)heap_caps_malloc(4, MALLOC_CAP_DMA);
-uint8_t <a href="#id9"><span class="problematic" id="id10">*</span></a>recvbuf = (uint8_t <a href="#id11"><span class="problematic" id="id12">*</span></a>)heap_caps_malloc(4, MALLOC_CAP_DMA);</p>
-<dl class="simple">
-<dt>if (sendbuf == NULL || recvbuf == NULL) {</dt><dd><p>ESP_LOGE(TAG, «Failed to allocate DMA-capable memory»);
-return;</p>
-</dd>
-</dl>
-<p>}</p>
-<p>memset(sendbuf, 0, 4);  // Inicializar el buffer de envío</p>
-<p>spi_slave_transaction_t t;
-memset(&amp;t, 0, sizeof(t));  // Inicializar la estructura de transacción SPI</p>
-<dl>
-<dt>while (1) {</dt><dd><p>// Esperar un comando desde el maestro
-t.length = 8 * 2;  // Recibir 1 byte de comando y enviar 2 bytes de respuesta
-t.tx_buffer = sendbuf;
-t.rx_buffer = recvbuf;</p>
-<p>// Realizar la transacción SPI
-ret = spi_slave_transmit(SPIHOST, &amp;t, portMAX_DELAY);
-ESP_ERROR_CHECK(ret);</p>
-<p>// Procesar el comando recibido
-process_command(recvbuf);</p>
-<p>// Copiar el resultado de PK_BUFF al buffer de envío
-sendbuf[0] = PK_BUFF[0];
-sendbuf[1] = PK_BUFF[1];</p>
-</dd>
-</dl>
-<p>}</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<div aria-label="Tabbed content" class="closeable" role="tablist"><button aria-controls="panel-0-0-0" aria-selected="true" class="sphinx-tabs-tab" id="tab-0-0-0" name="0-0" role="tab" tabindex="0">MicroPython RP2040</button><button aria-controls="panel-0-0-1" aria-selected="false" class="sphinx-tabs-tab" id="tab-0-0-1" name="0-1" role="tab" tabindex="-1">ESP-IDF ESP32</button></div><div aria-labelledby="tab-0-0-0" class="sphinx-tabs-panel" id="panel-0-0-0" name="0-0" role="tabpanel" tabindex="0"><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span><span class="p">,</span> <span class="n">SPI</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># RP2040 pin configuration</span>
+<span class="n">rp2040_cs</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>   <span class="c1"># Chip Select (CS)</span>
+<span class="n">spi</span> <span class="o">=</span> <span class="n">SPI</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">1000000</span><span class="p">,</span> <span class="n">polarity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">phase</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sck</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">14</span><span class="p">),</span> <span class="n">mosi</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span> <span class="n">miso</span><span class="o">=</span><span class="n">Pin</span><span class="p">(</span><span class="mi">12</span><span class="p">))</span>
+
+<span class="c1"># rp2040_cs = Pin(21, Pin.OUT)   # Chip Select (CS)</span>
+<span class="c1"># spi = SPI(0, baudrate=100000, polarity=0, phase=0, sck=Pin(18), mosi=Pin(19), miso=Pin(20))</span>
+
+
+<span class="k">def</span> <span class="nf">spi_send_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">response_length</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># Seleccionar el dispositivo SPI (bajar CS)</span>
+    <span class="n">rp2040_cs</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep_us</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Breve pausa para estabilizar CS</span>
+
+    <span class="c1"># Asegurarte de que ambos buffers (envío y respuesta) sean del mismo tamaño</span>
+    <span class="n">send_buffer</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">response_length</span><span class="p">)</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="n">response_length</span><span class="p">)</span>  <span class="c1"># Buffer de respuesta de 2 bytes, igual que send_buffer</span>
+
+    <span class="c1"># Copiar el comando en el buffer de envío (solo el primer byte)</span>
+    <span class="n">send_buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">command</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Enviar el comando y recibir la respuesta</span>
+    <span class="n">spi</span><span class="o">.</span><span class="n">write_readinto</span><span class="p">(</span><span class="n">send_buffer</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+    <span class="c1"># Deseleccionar el dispositivo SPI (subir CS)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep_us</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">rp2040_cs</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">response</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Lista de comandos para enviar al ESP32 (cada comando es de 1 byte)</span>
+    <span class="n">commands</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x01</span><span class="s1">&#39;</span><span class="p">,</span>  <span class="c1"># Comando 0x01: Solicitar estado general de memoria</span>
+        <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x02</span><span class="s1">&#39;</span><span class="p">,</span>  <span class="c1"># Comando 0x02: Solicitar memoria libre</span>
+        <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x03</span><span class="s1">&#39;</span><span class="p">,</span>  <span class="c1"># Comando 0x03: Solicitar estado de los registros</span>
+        <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\x21</span><span class="s1">&#39;</span>   <span class="c1"># Comando 0x04: Solicitar temperatura</span>
+    <span class="p">]</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">command_to_send</span> <span class="ow">in</span> <span class="n">commands</span><span class="p">:</span>
+            <span class="c1"># Enviar el comando y recibir la respuesta</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">spi_send_command</span><span class="p">(</span><span class="n">command_to_send</span><span class="p">,</span> <span class="n">response_length</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># Ajustado para 2 bytes</span>
+
+            <span class="c1"># Imprimir el comando enviado y la respuesta recibida</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sent command: </span><span class="si">{</span><span class="n">command_to_send</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2"> | Received response:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
+
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Tiempo de espera entre comandos</span>
+
+<span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</div><div aria-labelledby="tab-0-0-1" class="sphinx-tabs-panel" hidden="true" id="panel-0-0-1" name="0-1" role="tabpanel" tabindex="0"><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;driver/spi_slave.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;driver/gpio.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;esp_log.h&quot;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;esp_system.h&quot;</span><span class="c1">  // Para funciones del sistema como esp_get_free_heap_size</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;esp_heap_caps.h&quot;</span><span class="c1">  // Para asignación de memoria compatible con DMA</span>
+
+<span class="c1">// ESP32 WROOM 32E</span>
+
+<span class="cp">#define PIN_NUM_MISO 23</span>
+<span class="cp">#define PIN_NUM_MOSI 14</span>
+<span class="cp">#define PIN_NUM_CLK  18</span>
+<span class="cp">#define PIN_NUM_CS   5</span>
+<span class="cp">#define SPIHOST    HSPI_HOST</span>
+<span class="cp">#define ESP32_state  0</span>
+
+
+
+<span class="cp">#define CMD_START_RX 0XE0</span>
+<span class="cp">#define CMD_END_RX 0XEE</span>
+
+<span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">TAG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SPI_SLAVE&quot;</span><span class="p">;</span>
+
+<span class="c1">// Buffer de 2 bytes para la transmisión SPI</span>
+<span class="kt">uint8_t</span><span class="w"> </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="c1">// Función para procesar el comando recibido por SPI</span>
+<span class="kt">void</span><span class="w"> </span><span class="nf">process_command</span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">command</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">// delete start and end command choose the command</span>
+<span class="w">    </span><span class="c1">// command length is 1 byte</span>
+
+<span class="w">    </span><span class="n">ESP_LOGI</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Received command: %02X&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">command</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+
+<span class="w">    </span><span class="c1">// Simular una respuesta según el comando recibido</span>
+<span class="w">    </span><span class="k">switch</span><span class="w"> </span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="mh">0x01</span><span class="p">:</span><span class="w">  </span><span class="c1">// Comando 0x01: Retornar estado de la memoria</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x53</span><span class="p">;</span><span class="w">  </span><span class="c1">// Ejemplo de estado de memoria</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x4f</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="mh">0x02</span><span class="p">:</span><span class="w">  </span><span class="c1">// Comando 0x02: Retornar memoria disponible</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x59</span><span class="p">;</span><span class="w">  </span><span class="c1">// Simular datos</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x2D</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="mh">0x03</span><span class="p">:</span><span class="w">  </span><span class="c1">// Comando 0x03: Retornar estado de registros</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x28</span><span class="p">;</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x29</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">case</span><span class="w"> </span><span class="mh">0x21</span><span class="p">:</span><span class="w">  </span><span class="c1">// Comando 0x04: Name ascii 32, S3, C6</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x4f</span><span class="p">;</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x4b</span><span class="p">;</span>
+
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">        </span><span class="k">default</span><span class="o">:</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x00</span><span class="p">;</span><span class="w">  </span><span class="c1">// Comando desconocido</span>
+<span class="w">            </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mh">0x00</span><span class="p">;</span>
+<span class="w">            </span><span class="k">break</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span><span class="w"> </span><span class="nf">app_main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Configuración del bus SPI</span>
+<span class="w">    </span><span class="n">spi_bus_config_t</span><span class="w"> </span><span class="n">buscfg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">.</span><span class="n">mosi_io_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PIN_NUM_MOSI</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">miso_io_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PIN_NUM_MISO</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">sclk_io_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PIN_NUM_CLK</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">quadwp_io_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">quadhd_io_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Configuración de la interfaz SPI como esclavo</span>
+<span class="w">    </span><span class="n">spi_slave_interface_config_t</span><span class="w"> </span><span class="n">slvcfg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="p">.</span><span class="n">spics_io_num</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PIN_NUM_CS</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">        </span><span class="p">.</span><span class="n">queue_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">  </span><span class="c1">// Aumentar el tamaño de la cola para mejorar el rendimiento</span>
+<span class="w">        </span><span class="p">.</span><span class="n">mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="p">};</span>
+
+<span class="w">    </span><span class="c1">// Inicializar el bus SPI como esclavo</span>
+<span class="w">    </span><span class="n">esp_err_t</span><span class="w"> </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spi_slave_initialize</span><span class="p">(</span><span class="n">SPIHOST</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">buscfg</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">slvcfg</span><span class="p">,</span><span class="w"> </span><span class="n">SPI_DMA_CH_AUTO</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ESP_ERROR_CHECK</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// Asignar buffers de 4 bytes para enviar y recibir datos</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">sendbuf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">heap_caps_malloc</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">MALLOC_CAP_DMA</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="n">recvbuf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">uint8_t</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">heap_caps_malloc</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">MALLOC_CAP_DMA</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">sendbuf</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">recvbuf</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">ESP_LOGE</span><span class="p">(</span><span class="n">TAG</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Failed to allocate DMA-capable memory&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">sendbuf</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">);</span><span class="w">  </span><span class="c1">// Inicializar el buffer de envío</span>
+
+<span class="w">    </span><span class="n">spi_slave_transaction_t</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">t</span><span class="p">));</span><span class="w">  </span><span class="c1">// Inicializar la estructura de transacción SPI</span>
+
+<span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">// Esperar un comando desde el maestro</span>
+<span class="w">        </span><span class="n">t</span><span class="p">.</span><span class="n">length</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">  </span><span class="c1">// Recibir 1 byte de comando y enviar 2 bytes de respuesta</span>
+<span class="w">        </span><span class="n">t</span><span class="p">.</span><span class="n">tx_buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sendbuf</span><span class="p">;</span>
+<span class="w">        </span><span class="n">t</span><span class="p">.</span><span class="n">rx_buffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">recvbuf</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// Realizar la transacción SPI</span>
+<span class="w">        </span><span class="n">ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">spi_slave_transmit</span><span class="p">(</span><span class="n">SPIHOST</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t</span><span class="p">,</span><span class="w"> </span><span class="n">portMAX_DELAY</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ESP_ERROR_CHECK</span><span class="p">(</span><span class="n">ret</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Procesar el comando recibido</span>
+<span class="w">        </span><span class="n">process_command</span><span class="p">(</span><span class="n">recvbuf</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">// Copiar el resultado de PK_BUFF al buffer de envío</span>
+<span class="w">        </span><span class="n">sendbuf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+<span class="w">        </span><span class="n">sendbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PK_BUFF</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div></div>
 </section>
 </section>
@@ -703,16 +716,16 @@ sendbuf[1] = PK_BUFF[1];</p>
 <p>La diferencia entre VSPI y HSPI radica en la velocidad de transferencia de datos. VSPI es más lento que HSPI, pero es más fácil de configurar. HSPI, por otro lado, es más rápido pero requiere una configuración más detallada.</p>
 <section id="interfaz-vspi">
 <h4>Interfaz VSPI<a class="headerlink" href="#interfaz-vspi" title="Link to this heading">#</a></h4>
-<figure class="align-center" id="id16">
+<figure class="align-center" id="id4">
 <span id="figura-micro-sd-card-reader"></span><a class="reference internal image-reference" href="_images/Lector-Micro-SD.jpg"><img alt="Lector externo de Micro SD" src="_images/Lector-Micro-SD.jpg" style="width: 40%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 21 </span><span class="caption-text">Lector externo de Micro SD</span><a class="headerlink" href="#id16" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 21 </span><span class="caption-text">Lector externo de Micro SD</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Las conexiones son las siguientes:</p>
 <p>Esta tabla ilustra las conexiones entre la tarjeta SD y los pines GPIO en los microcontroladores ESP32 y RP2040.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id17">
-<caption><span class="caption-number">Tabla 10 </span><span class="caption-text">Conexiones VSPI</span><a class="headerlink" href="#id17" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id5">
+<caption><span class="caption-number">Tabla 10 </span><span class="caption-text">Conexiones VSPI</span><a class="headerlink" href="#id5" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 14.3%" />
 <col style="width: 28.6%" />
@@ -789,8 +802,8 @@ sendbuf[1] = PK_BUFF[1];</p>
 <section id="interfaz-hspi">
 <h4>Interfaz HSPI<a class="headerlink" href="#interfaz-hspi" title="Link to this heading">#</a></h4>
 <p>Esta tabla detalla las conexiones entre la tarjeta SD y el microcontrolador ESP32.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id18">
-<caption><span class="caption-number">Tabla 11 </span><span class="caption-text">Conexiones HSPI</span><a class="headerlink" href="#id18" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id6">
+<caption><span class="caption-number">Tabla 11 </span><span class="caption-text">Conexiones HSPI</span><a class="headerlink" href="#id6" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 40.0%" />
@@ -871,15 +884,15 @@ sendbuf[1] = PK_BUFF[1];</p>
 <h2>SDIO (Interfaz de Entrada/Salida Segura Digital)<a class="headerlink" href="#sdio-interfaz-de-entrada-salida-segura-digital" title="Link to this heading">#</a></h2>
 <p>SDIO (Secure Digital Input/Output) es una interfaz de comunicación de alta velocidad que permite la transferencia de datos entre un microcontrolador y una tarjeta SD. La placa de desarrollo DualMCU ONE ofrece soporte para la interfaz SDIO, lo que te permite leer y escribir datos en una tarjeta SD de forma rápida y eficiente.</p>
 <p>La interfaz SDIO es una interfaz de comunicación de alta velocidad que permite la transferencia de datos entre un microcontrolador y una tarjeta SD. La placa de desarrollo DualMCU ONE ofrece soporte para la interfaz SDIO, lo que te permite leer y escribir datos en una tarjeta SD de forma rápida y eficiente.</p>
-<figure class="align-center" id="id19">
+<figure class="align-center" id="id7">
 <span id="figura-micro-sd-card"></span><a class="reference internal image-reference" href="_images/Micro-SD-Card-Pinout.png"><img alt="Pinout de la Micro SD" src="_images/Micro-SD-Card-Pinout.png" style="width: 40%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 22 </span><span class="caption-text">Pinout de la Micro SD</span><a class="headerlink" href="#id19" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 22 </span><span class="caption-text">Pinout de la Micro SD</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Esta tabla detalla las conexiones entre la tarjeta SD y el microcontrolador ESP32.</p>
-<div class="pst-scrollable-table-container"><table class="table table-center" id="id20">
-<caption><span class="caption-number">Tabla 12 </span><span class="caption-text">Conexiones SDIO</span><a class="headerlink" href="#id20" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id8">
+<caption><span class="caption-number">Tabla 12 </span><span class="caption-text">Conexiones SDIO</span><a class="headerlink" href="#id8" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 25.0%" />
 <col style="width: 25.0%" />
@@ -929,10 +942,10 @@ sendbuf[1] = PK_BUFF[1];</p>
 </div>
 <section id="ejemplo-de-aplicacion">
 <h3>Ejemplo de aplicación<a class="headerlink" href="#ejemplo-de-aplicacion" title="Link to this heading">#</a></h3>
-<figure class="align-center" id="id21">
-<span id="id13"></span><a class="reference internal image-reference" href="_images/output_serial.png"><img alt="Lector de Micro SD" src="_images/output_serial.png" style="width: 90%;" /></a>
+<figure class="align-center" id="id9">
+<span id="id1"></span><a class="reference internal image-reference" href="_images/output_serial.png"><img alt="Lector de Micro SD" src="_images/output_serial.png" style="width: 90%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 23 </span><span class="caption-text">Lector de Micro SD</span><a class="headerlink" href="#id21" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 23 </span><span class="caption-text">Lector de Micro SD</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/* Sketch for testing the ESP32 HSPI interface on the DualMCU ONE.</span>

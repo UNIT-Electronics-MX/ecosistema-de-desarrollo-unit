@@ -70,7 +70,7 @@ La placa de desarrollo DualMCU ONE está equipada con dos microcontroladores, el
 
 .. tabs:: 
 
-  .. tab:: 
+  .. tab:: MicroPython RP2040
 
     .. code-block:: python
 
@@ -128,7 +128,7 @@ La placa de desarrollo DualMCU ONE está equipada con dos microcontroladores, el
       main()
 
 
-  .. tab::
+  .. tab:: ESP-IDF ESP32
 
     .. code-block:: c
 
