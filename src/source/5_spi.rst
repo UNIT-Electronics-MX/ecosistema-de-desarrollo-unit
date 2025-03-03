@@ -36,6 +36,219 @@ A continuación, se muestra la tabla de asignación de pines para las conexiones
     - 5
     - 17
 
+DualMCU ONE RP2040 y ESP32
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La placa de desarrollo DualMCU ONE está equipada con dos microcontroladores, el ESP32 y el RP2040. Ambos microcontroladores ofrecen soporte para la comunicación SPI, lo que te permite conectar dispositivos SPI a la placa de desarrollo.
+
+
+.. list-table:: Configuración SPI cruzado entre ESP32 y RP2040
+  :widths: 20 20 20 20
+  :header-rows: 1
+  :align: center
+
+  * - ESP32
+    - RP2040
+    - GPIO
+    - GPIO
+  * - SCK
+    - SCK
+    - 18
+    - 14
+  * - MISO
+    - MOSI
+    - 23
+    - 15
+  * - MOSI
+    - MISO
+    - 19
+    - 12
+  * - SS
+    - SS
+    - 5
+    - 13
+
+.. tabs:: 
+
+  .. tab:: 
+
+    .. code-block:: python
+
+      from machine import Pin, SPI
+      import time
+
+      # RP2040 pin configuration
+      rp2040_cs = Pin(13, Pin.OUT)   # Chip Select (CS)
+      spi = SPI(1, baudrate=1000000, polarity=0, phase=0, sck=Pin(14), mosi=Pin(15), miso=Pin(12))
+
+      # rp2040_cs = Pin(21, Pin.OUT)   # Chip Select (CS)
+      # spi = SPI(0, baudrate=100000, polarity=0, phase=0, sck=Pin(18), mosi=Pin(19), miso=Pin(20))
+
+
+      def spi_send_command(command, response_length=3):
+          # Seleccionar el dispositivo SPI (bajar CS)
+          rp2040_cs.value(0)
+          time.sleep_us(10)  # Breve pausa para estabilizar CS
+          
+          # Asegurarte de que ambos buffers (envío y respuesta) sean del mismo tamaño
+          send_buffer = bytearray(response_length)
+          response = bytearray(response_length)  # Buffer de respuesta de 2 bytes, igual que send_buffer
+
+          # Copiar el comando en el buffer de envío (solo el primer byte)
+          send_buffer[0] = command[0]
+
+          # Enviar el comando y recibir la respuesta
+          spi.write_readinto(send_buffer, response)
+          
+          # Deseleccionar el dispositivo SPI (subir CS)
+          time.sleep_us(1)
+          rp2040_cs.value(1)
+          
+          return response
+
+      def main():
+          # Lista de comandos para enviar al ESP32 (cada comando es de 1 byte)
+          commands = [
+              b'\x01',  # Comando 0x01: Solicitar estado general de memoria
+              b'\x02',  # Comando 0x02: Solicitar memoria libre
+              b'\x03',  # Comando 0x03: Solicitar estado de los registros
+              b'\x21'   # Comando 0x04: Solicitar temperatura
+          ]
+          
+          while True:
+              for command_to_send in commands:
+                  # Enviar el comando y recibir la respuesta
+                  response = spi_send_command(command_to_send, response_length=3)  # Ajustado para 2 bytes
+                  
+                  # Imprimir el comando enviado y la respuesta recibida
+                  print(f"Sent command: {command_to_send.hex()} | Received response:", response)
+                  
+                  time.sleep(1)  # Tiempo de espera entre comandos
+
+      main()
+
+
+  .. tab::
+
+    .. code-block:: c
+
+      #include <stdio.h>
+      #include <string.h>
+      #include "driver/spi_slave.h"
+      #include "driver/gpio.h"
+      #include "esp_log.h"
+      #include "esp_system.h"  // Para funciones del sistema como esp_get_free_heap_size
+      #include "esp_heap_caps.h"  // Para asignación de memoria compatible con DMA
+
+      // ESP32 WROOM 32E
+
+      #define PIN_NUM_MISO 23
+      #define PIN_NUM_MOSI 14
+      #define PIN_NUM_CLK  18
+      #define PIN_NUM_CS   5
+      #define SPIHOST    HSPI_HOST
+      #define ESP32_state  0
+
+
+
+      #define CMD_START_RX 0XE0
+      #define CMD_END_RX 0XEE
+
+      static const char *TAG = "SPI_SLAVE";
+
+      // Buffer de 2 bytes para la transmisión SPI
+      uint8_t PK_BUFF[2];
+
+      // Función para procesar el comando recibido por SPI
+      void process_command(uint8_t *command) {
+
+          // delete start and end command choose the command 
+          // command length is 1 byte
+          
+          ESP_LOGI(TAG, "Received command: %02X", command[0]);
+
+          // Simular una respuesta según el comando recibido
+          switch (command[0]) {
+              case 0x01:  // Comando 0x01: Retornar estado de la memoria
+                  PK_BUFF[0] = 0x53;  // Ejemplo de estado de memoria
+                  PK_BUFF[1] = 0x4f;
+                  break;
+              case 0x02:  // Comando 0x02: Retornar memoria disponible
+                  PK_BUFF[0] = 0x59;  // Simular datos
+                  PK_BUFF[1] = 0x2D;
+                  break;
+              case 0x03:  // Comando 0x03: Retornar estado de registros
+                  PK_BUFF[0] = 0x28;
+                  PK_BUFF[1] = 0x29;
+                  break;
+              case 0x21:  // Comando 0x04: Name ascii 32, S3, C6
+                  PK_BUFF[0] = 0x4f;  
+                  PK_BUFF[1] = 0x4b;
+    
+                  break;
+              default:
+                  PK_BUFF[0] = 0x00;  // Comando desconocido
+                  PK_BUFF[1] = 0x00;
+                  break;
+          }
+      }
+
+      void app_main(void) {
+          // Configuración del bus SPI
+          spi_bus_config_t buscfg = {
+              .mosi_io_num = PIN_NUM_MOSI,
+              .miso_io_num = PIN_NUM_MISO,
+              .sclk_io_num = PIN_NUM_CLK,
+              .quadwp_io_num = -1,
+              .quadhd_io_num = -1,
+          };
+
+          // Configuración de la interfaz SPI como esclavo
+          spi_slave_interface_config_t slvcfg = {
+              .spics_io_num = PIN_NUM_CS,
+              .flags = 0,
+              .queue_size = 6,  // Aumentar el tamaño de la cola para mejorar el rendimiento
+              .mode = 0,
+          };
+
+          // Inicializar el bus SPI como esclavo
+          esp_err_t ret = spi_slave_initialize(SPIHOST, &buscfg, &slvcfg, SPI_DMA_CH_AUTO);
+          ESP_ERROR_CHECK(ret);
+
+          // Asignar buffers de 4 bytes para enviar y recibir datos
+          uint8_t *sendbuf = (uint8_t *)heap_caps_malloc(4, MALLOC_CAP_DMA);
+          uint8_t *recvbuf = (uint8_t *)heap_caps_malloc(4, MALLOC_CAP_DMA);
+
+          if (sendbuf == NULL || recvbuf == NULL) {
+              ESP_LOGE(TAG, "Failed to allocate DMA-capable memory");
+              return;
+          }
+
+          memset(sendbuf, 0, 4);  // Inicializar el buffer de envío
+
+          spi_slave_transaction_t t;
+          memset(&t, 0, sizeof(t));  // Inicializar la estructura de transacción SPI
+
+          while (1) {
+              // Esperar un comando desde el maestro
+              t.length = 8 * 2;  // Recibir 1 byte de comando y enviar 2 bytes de respuesta
+              t.tx_buffer = sendbuf;
+              t.rx_buffer = recvbuf;
+
+              // Realizar la transacción SPI
+              ret = spi_slave_transmit(SPIHOST, &t, portMAX_DELAY);
+              ESP_ERROR_CHECK(ret);
+
+              // Procesar el comando recibido
+              process_command(recvbuf);
+
+              // Copiar el resultado de PK_BUFF al buffer de envío
+              sendbuf[0] = PK_BUFF[0];
+              sendbuf[1] = PK_BUFF[1];
+          }
+      }
+          
+
 
 SDCard SPI
 ---------------------
