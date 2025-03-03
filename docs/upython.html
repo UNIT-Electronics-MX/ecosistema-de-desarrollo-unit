@@ -179,6 +179,7 @@
 <li class="toctree-l1"><a class="reference internal" href="2_inputDigital.html">Entradas digitales</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_adc.html">Conversión de Analógico a Digital</a></li>
 <li class="toctree-l1"><a class="reference internal" href="4_i2c.html">I2C (Inter-Integrated Circuit)</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="5_spi.html">SPI (Interfaz Periférica Serial)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_USB.html">Interfaz USB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7_WS2812.html">Control WS2812</a></li>
@@ -396,17 +397,18 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">MicroPython</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-avanzadas-de-micropython">Características Avanzadas de MicroPython</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibilidad-de-placas">Compatibilidad de Placas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-avanzadas">Características Avanzadas</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sintaxis-y-tipado-en-micropython">Sintaxis y Tipado en MicroPython</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mas-informacion-y-recursos">Más Información y Recursos</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comenzando-con-micropython">Comenzando con MicroPython</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-y-modulos-de-micropython">Bibliotecas y Módulos de MicroPython</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides-y-herramientas-de-micropython">IDEs y Herramientas de MicroPython</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-y-modulos">Bibliotecas y Módulos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides-y-herramientas">IDEs y Herramientas</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-de-bilibiotecas-con-mip">Guía de Instalación de bilibiotecas con MIP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-de-bibliotecas-con-mip">Guía de Instalación de Bibliotecas con MIP</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-dualmcu">Biblioteca DualMCU</a></li>
 </ul>
 </li>
@@ -424,13 +426,16 @@ document.write(`
                   
   <section id="micropython">
 <h1>MicroPython<a class="headerlink" href="#micropython" title="Link to this heading">#</a></h1>
-<p>MicroPython es una implementación ligera y eficiente del lenguaje de programación Python 3 que está optimizada para ejecutarse en microcontroladores. Está diseñado para ser utilizado en entornos restringidos, lo que lo hace adecuado para el desarrollo de sistemas embebidos. MicroPython proporciona un conjunto rico de bibliotecas y módulos que permiten a los desarrolladores interactuar con componentes de hardware y periféricos, lo que lo convierte en una opción ideal para proyectos de IoT y prototipos.</p>
-<p>La siguiente tabla enumera las placas que son compatibles con MicroPython.</p>
+<p>MicroPython es una implementación ligera y eficiente de Python 3. Está optimizado para microcontroladores y entornos restringidos, lo que lo hace ideal para sistemas embebidos e IoT. Proporciona un conjunto amplio de bibliotecas y módulos para interactuar con hardware y periféricos.</p>
+<section id="compatibilidad-de-placas">
+<h2>Compatibilidad de Placas<a class="headerlink" href="#compatibilidad-de-placas" title="Link to this heading">#</a></h2>
+<p>La siguiente tabla enumera las placas compatibles con MicroPython:</p>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
-<p>Para descargar MicroPython y obtener más información sobre cómo instalarlo en una placa de microcontrolador específica, visite el <a class="reference external" href="https://www.micropython.org/download/">sitio web oficial de MicroPython</a>.</p>
+<p>Para descargar MicroPython y obtener más información sobre su instalación en placas específicas, visite el <a class="reference external" href="https://www.micropython.org/download/">sitio web oficial de MicroPython</a>.</p>
 </div>
-<div class="pst-scrollable-table-container"><table class="table">
+<div class="pst-scrollable-table-container"><table class="table" id="id1">
+<caption><span class="caption-number">Tabla 1 </span><span class="caption-text">Placas compatibles con MicroPython</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 20.0%" />
 <col style="width: 80.0%" />
@@ -442,38 +447,39 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>ESP32</p></td>
-<td><p>ESP32 es una serie de microcontroladores de bajo costo con Wi-Fi y Bluetooth integrados, ideal para aplicaciones IoT. Dispone de un robusto soporte en MicroPython y documentación oficial amplia.</p></td>
+<td><p>Microcontrolador de bajo costo con Wi-Fi y Bluetooth, ideal para aplicaciones IoT. Amplio soporte y documentación.</p></td>
 </tr>
 <tr class="row-odd"><td><p>RP2040</p></td>
-<td><p>El chip RP2040, utilizado en la Raspberry Pi Pico, es eficiente y compatible con MicroPython para proyectos educativos, prototipos y sistemas embebidos.</p></td>
+<td><p>Chip utilizado en Raspberry Pi Pico, perfecto para proyectos educativos y sistemas embebidos.</p></td>
 </tr>
 <tr class="row-even"><td><p>STM32</p></td>
-<td><p>STM32 ofrece microcontroladores de alto rendimiento para aplicaciones en tiempo real, con soporte en MicroPython en varias series (por ejemplo, STM32F4 y STM32F7).</p></td>
+<td><p>Microcontroladores de alto rendimiento para aplicaciones en tiempo real (p. ej., STM32F4 y STM32F7).</p></td>
 </tr>
 <tr class="row-odd"><td><p>nRF52</p></td>
-<td><p>La serie nRF52 de Nordic Semiconductor se destaca por su bajo consumo y alta eficiencia, ideal para aplicaciones BLE; su compatibilidad con MicroPython está respaldada por documentación y ejemplos prácticos.</p></td>
+<td><p>Dispositivos de bajo consumo, adecuados para aplicaciones BLE, con soporte respaldado por ejemplos prácticos.</p></td>
 </tr>
 <tr class="row-even"><td><p>Pyboard</p></td>
-<td><p>La Pyboard es la placa oficial de MicroPython, diseñada específicamente para aprovechar al máximo las capacidades de este lenguaje en entornos embebidos.</p></td>
+<td><p>Placa oficial de MicroPython, diseñada específicamente para aprovechar las capacidades del lenguaje.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<section id="caracteristicas-avanzadas-de-micropython">
-<h2>Características Avanzadas de MicroPython<a class="headerlink" href="#caracteristicas-avanzadas-de-micropython" title="Link to this heading">#</a></h2>
-<p>MicroPython es una solución ligera y poderosa para el desarrollo de sistemas embebidos, diseñada para maximizar el rendimiento en dispositivos con recursos limitados sin renunciar a la versatilidad del lenguaje Python. A continuación se detallan sus características principales:</p>
+</section>
+<section id="caracteristicas-avanzadas">
+<h2>Características Avanzadas<a class="headerlink" href="#caracteristicas-avanzadas" title="Link to this heading">#</a></h2>
+<p>MicroPython combina el rendimiento en dispositivos con pocos recursos con la versatilidad de Python 3. Entre sus principales características se destacan:</p>
 <ul class="simple">
-<li><p><strong>REPL Interactivo</strong>: Permite ejecutar y probar fragmentos de código en tiempo real, facilitando la depuración y la experimentación directa en el dispositivo.</p></li>
-<li><p><strong>Interfaz de Hardware Optimizada</strong>: Incorpora bibliotecas para el manejo eficiente de pines GPIO, I2C, SPI, UART y otros periféricos, lo que simplifica la integración con sensores, actuadores y módulos de comunicación.</p></li>
-<li><p><strong>Eficiencia de Recursos</strong>: Sus optimizaciones específicas hacen que MicroPython consuma mínimos recursos, convirtiéndolo en la opción ideal para microcontroladores y dispositivos embebidos con memoria y poder de cómputo limitados.</p></li>
-<li><p><strong>Compatibilidad con Python 3</strong>: Ofrece la facilidad y familiaridad de Python, permitiendo la migración de proyectos y la utilización de una amplia gama de bibliotecas existentes.</p></li>
-<li><p><strong>Facilidad de Integración y Extensión</strong>: Su ecosistema permite la incorporación de módulos externos y soporte para aplicaciones IoT, facilitando la implementación de soluciones complejas.</p></li>
+<li><p>REPL interactivo para pruebas y depuración en tiempo real.</p></li>
+<li><p>Bibliotecas optimizadas para el manejo de pines GPIO, I2C, SPI, UART, etc.</p></li>
+<li><p>Eficiencia en el uso de recursos, ideal para microcontroladores.</p></li>
+<li><p>Compatibilidad con gran parte del ecosistema Python.</p></li>
+<li><p>Facilidad de integración y extensión para soluciones IoT y embebidas.</p></li>
 </ul>
 <section id="sintaxis-y-tipado-en-micropython">
 <h3>Sintaxis y Tipado en MicroPython<a class="headerlink" href="#sintaxis-y-tipado-en-micropython" title="Link to this heading">#</a></h3>
-<p>MicroPython mantiene la sintaxis clara y legible de Python 3, combinada con un tipado dinámico que agiliza el proceso de desarrollo. Las principales características incluyen:</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-number">Tabla 1 </span><span class="caption-text">Comparativa de Características de Sintaxis y Tipado</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<p>La sintaxis de MicroPython es similar a Python 3, con tipado dinámico que facilita el desarrollo. A continuación, se presenta una comparativa de sus características:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id2">
+<caption><span class="caption-number">Tabla 2 </span><span class="caption-text">Comparativa de características</span><a class="headerlink" href="#id2" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 30.0%" />
 <col style="width: 70.0%" />
@@ -485,16 +491,16 @@ document.write(`
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Sintaxis Simplificada</p></td>
-<td><p>Conserva la legibilidad y estructura de Python 3, facilitando la escritura y el mantenimiento.</p></td>
+<td><p>Legibilidad y estructura claras, heredadas de Python 3.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Tipado Dinámico</p></td>
-<td><p>Permite la creación de variables sin necesidad de declarar tipos explícitos, acelerando el desarrollo.</p></td>
+<td><p>No requiere declaración explícita de tipos.</p></td>
 </tr>
 <tr class="row-even"><td><p>Optimización para Hardware Limitado</p></td>
-<td><p>Funciones adaptadas para minimizar el consumo de memoria y maximizar el rendimiento en microcontroladores.</p></td>
+<td><p>Funciones adaptadas para minimizar el consumo de memoria.</p></td>
 </tr>
 <tr class="row-odd"><td><p>Amplia Compatibilidad</p></td>
-<td><p>Gran parte del ecosistema de Python es utilizable, lo que acelera la integración de herramientas y librerías adicionales.</p></td>
+<td><p>Integración con gran parte del ecosistema y bibliotecas de Python.</p></td>
 </tr>
 </tbody>
 </table>
@@ -502,116 +508,145 @@ document.write(`
 </section>
 <section id="mas-informacion-y-recursos">
 <h3>Más Información y Recursos<a class="headerlink" href="#mas-informacion-y-recursos" title="Link to this heading">#</a></h3>
-<p>Para profundizar en el uso de MicroPython y aprovechar al máximo sus capacidades, se recomienda explorar:</p>
+<p>Para profundizar en el uso de MicroPython se recomienda:</p>
 <ul class="simple">
-<li><p>La documentación oficial en el <a class="reference external" href="https://www.micropython.org/">sitio de MicroPython</a>, que ofrece tutoriales, guías y ejemplos de aplicaciones reales.</p></li>
-<li><p>Comunidades y foros especializados donde desarrolladores comparten proyectos, soluciones y mejoras.</p></li>
-<li><p>Recursos interactivos y cursos en línea que facilitan una adopción rápida y eficiente del entorno MicroPython.</p></li>
+<li><p>Revisar la documentación oficial en el <a class="reference external" href="https://www.micropython.org/">sitio de MicroPython</a>.</p></li>
+<li><p>Participar en comunidades y foros especializados.</p></li>
+<li><p>Utilizar recursos interactivos y cursos en línea que faciliten la adopción del entorno.</p></li>
 </ul>
 </section>
 </section>
 <section id="comenzando-con-micropython">
 <h2>Comenzando con MicroPython<a class="headerlink" href="#comenzando-con-micropython" title="Link to this heading">#</a></h2>
-<p>Para iniciar tus proyectos con MicroPython sigue estos pasos:</p>
+<p>Pasos para iniciar tu proyecto:</p>
 <ol class="arabic simple">
 <li><p>Descarga el firmware adecuado para tu placa desde el <a class="reference external" href="https://micropython.org/download/">sitio oficial</a>.</p></li>
-<li><p>Conecta tu dispositivo mediante un terminal serial (UART) para acceder al REPL, donde podrás interactuar directamente con el microcontrolador.</p></li>
-<li><p>Revisa la documentación y ejemplos disponibles para crear aplicaciones embebidas, desde prototipos simples hasta complejas implementaciones IoT.</p></li>
 </ol>
-<p>Esta versión mejorada reúne información esencial y actualizada, destacando la eficiencia, versatilidad y facilidad de uso de MicroPython para el desarrollo de sistemas embebidos.</p>
+<div class="admonition tip">
+<p class="admonition-title">Truco</p>
+<p>A continuación, se presentan enlaces directos a los firmwares de MicroPython para ESP32 y RP2040:</p>
+<div class="pst-scrollable-table-container"><table class="table" id="id3">
+<caption><span class="caption-number">Tabla 3 </span><span class="caption-text">Firmwares de MicroPython</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Placa</p></th>
+<th class="head"><p>Firmware</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ESP32</p></td>
+<td><p><a class="reference external" href="https://github.com/UNIT-Electronics-MX/Ecosistema-de-Desarrollo-UNIT/releases/download/Micropython_by_uelectronics/micropython_uelectronics_version2025_DualMCU.bin">Micropython DualMCU ESP32 bin</a></p></td>
+</tr>
+<tr class="row-odd"><td><p>RP2040</p></td>
+<td><p><a class="reference external" href="https://github.com/UNIT-Electronics-MX/Ecosistema-de-Desarrollo-UNIT/releases/download/Micropython_by_uelectronics/Micropython_DualMCU_2025_RP2040.uf2">Micropython DualMCU RP2040 uf2</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Requerido para flashear el firmware en el ESP32 o <a class="reference external" href="https://espressif.github.io/esptool-js/">esptools</a></p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Conecta tu dispositivo mediante usando Thonny o cualquier otro IDE compatible con MicroPython.</p></li>
+<li><p>Consulta la <a class="reference external" href="https://unit-electronics-mx.github.io/wiki_uelectronics/es/docs/Development_boards/Compatibility_Arduino_upython/upython/">documentación y ejemplos para crear aplicaciones embebidas</a>, desde prototipos hasta soluciones IoT.</p></li>
+</ol>
 </section>
-<section id="bibliotecas-y-modulos-de-micropython">
-<h2>Bibliotecas y Módulos de MicroPython<a class="headerlink" href="#bibliotecas-y-modulos-de-micropython" title="Link to this heading">#</a></h2>
-<p>MicroPython proporciona un conjunto rico de bibliotecas y módulos que permiten a los desarrolladores trabajar con componentes de hardware y periféricos. Algunas de las bibliotecas y módulos clave disponibles en MicroPython incluyen:</p>
+<section id="bibliotecas-y-modulos">
+<h2>Bibliotecas y Módulos<a class="headerlink" href="#bibliotecas-y-modulos" title="Link to this heading">#</a></h2>
+<p>MicroPython ofrece un rico conjunto de módulos:</p>
 <ul class="simple">
-<li><p><strong>machine</strong>: Proporciona clases y funciones para interactuar con componentes de hardware como pines GPIO, I2C, SPI, UART y más.</p></li>
-<li><p><strong>network</strong>: Incluye clases y funciones para trabajar con interfaces de red, como Wi-Fi y Ethernet, lo que permite aplicaciones de IoT.</p></li>
+<li><p><strong>machine</strong>: Interacción con hardware (GPIO, I2C, SPI, UART, etc.).</p></li>
+<li><p><strong>network</strong>: Gestión de interfaces de red (Wi-Fi, Ethernet, etc.).</p></li>
 </ul>
 </section>
-<section id="ides-y-herramientas-de-micropython">
-<h2>IDEs y Herramientas de MicroPython<a class="headerlink" href="#ides-y-herramientas-de-micropython" title="Link to this heading">#</a></h2>
-<p>Hay varios Entornos de Desarrollo Integrados (IDEs) y herramientas disponibles para trabajar con MicroPython, tales como:</p>
+<section id="ides-y-herramientas">
+<h2>IDEs y Herramientas<a class="headerlink" href="#ides-y-herramientas" title="Link to this heading">#</a></h2>
+<p>Entre las herramientas recomendadas para trabajar con MicroPython se encuentran:</p>
 <ul class="simple">
-<li><p><strong>Thonny</strong>: Un IDE amigable para principiantes para Python que incluye soporte para MicroPython, proporcionando características como edición de código, REPL y transferencia de archivos.</p></li>
-<li><p><strong>uPyCraft</strong>: Un IDE ligero para el desarrollo de MicroPython que incluye características como edición de código, transferencia de archivos y comunicación serial con la placa.</p></li>
-<li><p><strong>rshell</strong>: Una herramienta de línea de comandos para acceder y gestionar archivos en una placa de MicroPython a través de una conexión serial, lo que permite la transferencia de archivos y el acceso al REPL.</p></li>
+<li><p><strong>Thonny</strong>: IDE sencillo y amigable, con soporte para MicroPython.</p></li>
+<li><p><strong>uPyCraft</strong>: IDE ligero que facilita la edición, transferencia de archivos y comunicación serial.</p></li>
+<li><p><strong>rshell</strong>: Herramienta de línea de comandos para gestionar archivos en la placa mediante conexión serial.</p></li>
 </ul>
 </section>
 </section>
-<hr class="docutils" />
-<section id="guia-de-instalacion-de-bilibiotecas-con-mip">
-<h1>Guía de Instalación de bilibiotecas con MIP<a class="headerlink" href="#guia-de-instalacion-de-bilibiotecas-con-mip" title="Link to this heading">#</a></h1>
+<section id="guia-de-instalacion-de-bibliotecas-con-mip">
+<h1>Guía de Instalación de Bibliotecas con MIP<a class="headerlink" href="#guia-de-instalacion-de-bibliotecas-con-mip" title="Link to this heading">#</a></h1>
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
 <p>El soporte directo para mip en RP2040 no está disponible. Se utiliza la biblioteca <cite>mip</cite> para instalar la biblioteca <cite>max1704x.py</cite>.</p>
 </div>
 <ul class="simple">
-<li><p>Dispositivo ESP32</p></li>
-<li><p>IDE Thonny</p></li>
-<li><p>Credenciales de Wi-Fi (SSID y Contraseña)</p></li>
+<li><p>Dispositivo ESP32.</p></li>
+<li><p>IDE Thonny.</p></li>
+<li><p>Credenciales de Wi-Fi (SSID y contraseña).</p></li>
 </ul>
-<p>Siga los pasos a continuación para instalar la biblioteca <cite>max1704x.py</cite>:</p>
-<p>Copie y ejecute el siguiente código en Thonny para conectar su ESP32 a una red Wi-Fi:</p>
+<p>Para instalar la biblioteca <cite>max1704x.py</cite>, siga estos pasos:</p>
+<ol class="arabic simple">
+<li><p>Conecte a Wi-Fi ejecutando el siguiente código en Thonny:</p></li>
+</ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mip</span>
 <span class="kn">import</span> <span class="nn">network</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 <span class="k">def</span> <span class="nf">connect_wifi</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-   <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
-   <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-   <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
+  <span class="n">wlan</span> <span class="o">=</span> <span class="n">network</span><span class="o">.</span><span class="n">WLAN</span><span class="p">(</span><span class="n">network</span><span class="o">.</span><span class="n">STA_IF</span><span class="p">)</span>
+  <span class="n">wlan</span><span class="o">.</span><span class="n">active</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">wlan</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
 
-   <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-      <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Conectado a la red Wi-Fi&#39;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
-      <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">wlan</span><span class="o">.</span><span class="n">isconnected</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Conectado a la red Wi-Fi&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">wlan</span><span class="o">.</span><span class="n">ifconfig</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No se pudo conectar a la red Wi-Fi&#39;</span><span class="p">)</span>
-   <span class="k">return</span> <span class="kc">None</span>
-
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No se pudo conectar a la red Wi-Fi&#39;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="kc">None</span>
 
 <span class="n">ssid</span> <span class="o">=</span> <span class="s2">&quot;tu_ssid&quot;</span>
 <span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;tu_contraseña&quot;</span>
 
 <span class="n">ip_address</span> <span class="o">=</span> <span class="n">connect_wifi</span><span class="p">(</span><span class="n">ssid</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span>
-<span class="n">mip</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/UNIT-Electronics/MAX1704X_lib/refs/heads/main/Software/MicroPython/example/max1704x.py&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Instale las bibliotecas utilizando mip:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mip</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/UNIT-Electronics/MAX1704X_lib/refs/heads/main/Software/MicroPython/example/max1704x.py&#39;</span><span class="p">)</span>
 <span class="n">mip</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/Cesarbautista10/Libraries_compatibles_with_micropython/refs/heads/main/Libs/oled.py&#39;</span><span class="p">)</span>
 <span class="n">mip</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/Cesarbautista10/Libraries_compatibles_with_micropython/refs/heads/main/Libs/sdcard.py&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="biblioteca-dualmcu">
 <h2>Biblioteca DualMCU<a class="headerlink" href="#biblioteca-dualmcu" title="Link to this heading">#</a></h2>
-<p>En primer lugar, debe instalar el IDE Thonny. Puede descargarlo desde el <a class="reference external" href="https://thonny.org/">sitio web de Thonny</a>.</p>
+<p>Para trabajar con la placa DualMCU ONE se debe instalar la biblioteca DualMCU.</p>
 <ol class="arabic simple">
-<li><p>Abra <a class="reference external" href="https://thonny.org/">Thonny</a>.</p></li>
-<li><p>Navegue a <strong>Herramientas</strong> -&gt; <strong>Administrar paquetes</strong>.</p></li>
+<li><p>Instale Thonny desde el <a class="reference external" href="https://thonny.org/">sitio web de Thonny</a>.</p></li>
+<li><p>En Thonny, vaya a <strong>Herramientas</strong> -&gt; <strong>Administrar paquetes</strong>.</p></li>
 <li><p>Busque <code class="docutils literal notranslate"><span class="pre">dualmcu</span></code> y haga clic en <strong>Instalar</strong>.</p></li>
 </ol>
-<figure class="align-center" id="id2">
-<span id="figure-dualmcu-libary"></span><a class="reference internal image-reference" href="_images/dualmcu_library.png"><img alt="Biblioteca DualMCU" src="_images/dualmcu_library.png" style="width: 60%;" /></a>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="_images/dualmcu_library.png"><img alt="Biblioteca DualMCU" src="_images/dualmcu_library.png" style="width: 60%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 1 </span><span class="caption-text">Biblioteca DualMCU</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 1 </span><span class="caption-text">Biblioteca DualMCU</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <ol class="arabic simple" start="4">
-<li><p>Biblioteca instalada correctamente.</p></li>
+<li><p>Verifique la instalación visual en:</p></li>
 </ol>
-<figure class="align-center" id="id3">
-<span id="figure-dualmcu-libary-success"></span><a class="reference internal image-reference" href="_images/dualmcu_library_success.png"><img alt="Biblioteca DualMCU" src="_images/dualmcu_library_success.png" style="width: 60%;" /></a>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/dualmcu_library_success.png"><img alt="Instalación exitosa de DualMCU" src="_images/dualmcu_library_success.png" style="width: 60%;" /></a>
 <figcaption>
-<p><span class="caption-number">Figura 2 </span><span class="caption-text">Biblioteca DualMCU instalada correctamente</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+<p><span class="caption-number">Figura 2 </span><span class="caption-text">DualMCU instalada correctamente</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>Alternativamente, descargue la biblioteca desde <a class="reference external" href="https://pypi.org/project/dualmcu/">dualmcu.py</a>.</p>
-<p>La biblioteca proporciona un conjunto de herramientas para ayudar a los desarrolladores a trabajar con la placa DualMCU ONE. Las siguientes son las principales características de la biblioteca:</p>
-<ul class="simple">
-<li><p><strong>Soporte I2C</strong>: La biblioteca ofrece soporte para el protocolo de comunicación I2C, facilitando la conexión con una amplia gama de sensores y dispositivos.</p></li>
-<li><p><strong>Compatibilidad con Shields de Arduino</strong>: La biblioteca es compatible con Shields de Arduino, lo que permite utilizar una gran variedad de shields y accesorios con la placa DualMCU ONE.</p></li>
-<li><p><strong>Soporte para SDcard</strong>: La biblioteca ofrece soporte para tarjetas SD, permitiendo a los desarrolladores leer y escribir datos en tarjetas SD de forma sencilla.</p></li>
-</ul>
-<p>Ejemplos de uso de la biblioteca:</p>
+<p>La biblioteca DualMCU proporciona herramientas para trabajar con la placa DualMCU ONE. Ejemplo de uso básico:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
 <span class="kn">from</span> <span class="nn">dualmcu</span> <span class="kn">import</span> <span class="o">*</span>
 
@@ -626,16 +661,15 @@ document.write(`
 <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;UNIT&#39;</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;ELECTRONICS&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
-
 <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><a class="reference external" href="https://pypi.org/project/dualmcu/">Dualmcu</a> : Esta biblioteca ofrece un conjunto de herramientas para ayudar a los desarrolladores a trabajar con la placa DualMCU ONE. La biblioteca se mantiene y actualiza activamente para brindar la mejor experiencia a los desarrolladores que utilizan la placa DualMCU ONE. Para más información y actualizaciones, visite el <a href="#id4"><span class="problematic" id="id5">`repositorio de GitHub dualmcu`__</span></a></p></li>
-<li><p><a class="reference external" href="https://pypi.org/project/ocks/">Ocks</a> : Esta biblioteca proporciona soporte para el protocolo de comunicación I2C.</p></li>
-<li><p><a class="reference external" href="https://pypi.org/project/sdcard-lib/">SDcard-lib</a> : Esta biblioteca ofrece soporte para tarjetas SD, permitiendo a los desarrolladores leer y escribir datos en tarjetas SD; todos los derechos pertenecen al autor original.</p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/dualmcu/">Dualmcu</a>: Herramientas para trabajar con la placa DualMCU ONE.</p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/ocks/">Ocks</a>: Soporte para comunicación I2C.</p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/sdcard-lib/">SDcard-lib</a>: Gestión de tarjetas SD.</p></li>
 </ul>
-<p>La biblioteca se mantiene y actualiza activamente para brindar la mejor experiencia a los desarrolladores que utilizan la placa DualMCU ONE. Para más información y actualizaciones, visite el <a href="#id4"><span class="problematic" id="id6">`repositorio de GitHub dualmcu`__</span></a></p>
+<p>Para más información y actualizaciones, visite el <a href="#id6"><span class="problematic" id="id7">`repositorio de GitHub dualmcu`__</span></a>.</p>
 </section>
 </section>
 
@@ -685,17 +719,18 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">MicroPython</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-avanzadas-de-micropython">Características Avanzadas de MicroPython</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compatibilidad-de-placas">Compatibilidad de Placas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caracteristicas-avanzadas">Características Avanzadas</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sintaxis-y-tipado-en-micropython">Sintaxis y Tipado en MicroPython</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mas-informacion-y-recursos">Más Información y Recursos</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comenzando-con-micropython">Comenzando con MicroPython</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-y-modulos-de-micropython">Bibliotecas y Módulos de MicroPython</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides-y-herramientas-de-micropython">IDEs y Herramientas de MicroPython</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliotecas-y-modulos">Bibliotecas y Módulos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ides-y-herramientas">IDEs y Herramientas</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-de-bilibiotecas-con-mip">Guía de Instalación de bilibiotecas con MIP</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#guia-de-instalacion-de-bibliotecas-con-mip">Guía de Instalación de Bibliotecas con MIP</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biblioteca-dualmcu">Biblioteca DualMCU</a></li>
 </ul>
 </li>

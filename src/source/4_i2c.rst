@@ -199,3 +199,89 @@ Cocket Nova implementación de I2C
 
    Pantalla OLED Cocket Nova
 
+
+
+Ejemplo de Integración
+======================
+
+Este ejemplo demuestra cómo integrar el Cargador Boost LiPo & Monitor I2C de UNIT con un ESP32 y mostrar el estado de la batería en una pantalla OLED.
+
+.. caution:: 
+   
+   Dado que el estándar Qwiic opera a 3.3V, se recomienda usar un regulador de voltaje después de la salida JST del módulo para reducir VSYS a 3.3V y proteger los dispositivos Qwiic conectados.
+
+
+Pasos para integrar el `Cargador Boost LiPo & Monitor I2C <https://github.com/UNIT-Electronics/MAX1704X_lib/blob/main/Software/MicroPython/example/max1704x.py>`_ de UNIT con el ESP32 y la pantalla OLED usando el conector JST y la comunicación I2C:
+
+1. **Conectar el Conector JST**: Conecta el conector JST a la placa DualMCU usando el  `conector JST SH de 1.0mm y 4 pines <https://uelectronics.com/producto/conectores-sh1-0mm-con-cable-28-awg-15cm/>`_.
+
+2. **Conectar el ESP32**: Conecta el ESP32 a la placa DualMCU mediante el protocolo de comunicación I2C.
+
+.. figure:: /_static/qwiic.png
+  :align: center
+  :alt: ESP32
+  :width: 50%
+  
+  Conector JST SH de 1.0mm y 4 pines conectado al ESP32.
+
+3. **Soldar la Configuración de Pines de la Batería**: Suelda las configuración apropiada para el cargador de batería. Configura la corriente de carga (0.2 mA) según las especificaciones de la batería.
+
+.. figure:: /_static/back.png
+  :align: center
+  :alt: Panel trasero
+  :width: 40%
+
+  Configuración de Pines de la Batería
+
+.. warning::
+
+   Asegúrate de verificar la polaridad de la batería antes de conectarla al cargador.
+
+4. **Conectar la Pantalla OLED**: Conecta la pantalla OLED al ESP32 usando el protocolo de comunicación I2C.
+
+5. **Subir el Código al ESP32**: Copia el siguiente código al ESP32 y ejecútalo usando Thonny:
+
+.. code-block:: python 
+
+    import machine
+    import time
+    from ocks import SSD1306_I2C
+    from max1704x import max1704x
+
+    i2c = machine.SoftI2C(sda=machine.Pin(21), scl=machine.Pin(22))
+    oled = SSD1306_I2C(128, 64, i2c)
+
+    my_sensor = max1704x(sda_pin=21, scl_pin=22)
+
+    def update_display():
+      oled.fill(0)  
+      oled.text('UNIT Max', 25, 0) 
+
+      vcell = my_sensor.getVCell()
+      soc = my_sensor.getSoc()
+      compensate_value = my_sensor.getCompensateValue()
+      alert_threshold = my_sensor.getAlertThreshold()
+      in_alert = my_sensor.inAlert()
+
+      oled.text("Voltaje: {:.2f}V".format(vcell), 0, 16)
+      oled.text("SOC: {:.1f}%".format(soc), 0, 26)
+      oled.text("Comp: {:.1f}".format(compensate_value), 0, 36)
+      oled.text("Alerta: {}".format("Sí" if in_alert else "No"), 0, 46)
+
+      oled.show()  
+      
+    while True:
+      update_display()  
+      time.sleep(2)
+
+
+6. **Monitorear el Estado de la Batería**: La pantalla OLED mostrará el estado de la batería, incluyendo el voltaje, estado de carga, valor de compensación y estado de alerta.
+
+7. **Cargar la Batería**: Conecta la batería al cargador y monitorea el estado de carga usando la pantalla OLED.
+
+.. figure:: /_static/example.jpg
+   :align: center
+   :alt: Ejemplo de Integración
+   :width: 80%
+
+   Ejemplo de Integración del Cargador Boost LiPo & Monitor I2C de UNIT con ESP32 y Pantalla OLED.

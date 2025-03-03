@@ -111,7 +111,7 @@ Prerequisitos
 Antes de continuar, asegúrate de tener instaladas las siguientes herramientas:
 
 - `Arduino IDE <https://www.arduino.cc/en/software>`_ – Requerido para programar las placas.
-- `Controladores USB <https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers>`_ – Necesarios para la comunicación con las placas.
+- `Controladores USB <https://www.wch-ic.com/downloads/CH341SER_EXE.html>`_ – Necesarios para la comunicación con las placas.
 - **Paquetes de soporte de placas:**
 
   - `DualMCU-ONE (ESP32 + RP2040 <https://uelectronics.com/producto/unit-dualmcu-one-esp32-rp2040/>`_

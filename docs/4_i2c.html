@@ -180,6 +180,7 @@
 <li class="toctree-l1"><a class="reference internal" href="2_inputDigital.html">Entradas digitales</a></li>
 <li class="toctree-l1"><a class="reference internal" href="3_adc.html">Conversión de Analógico a Digital</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">I2C (Inter-Integrated Circuit)</a></li>
+
 <li class="toctree-l1"><a class="reference internal" href="5_spi.html">SPI (Interfaz Periférica Serial)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="6_USB.html">Interfaz USB</a></li>
 <li class="toctree-l1"><a class="reference internal" href="7_WS2812.html">Control WS2812</a></li>
@@ -396,6 +397,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">I2C (Inter-Integrated Circuit)</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-general-del-i2c">Descripción General del I2C</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-aplicacion-pantalla-ssd1306">Ejemplo de aplicación Pantalla SSD1306</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython-y-arduino-ide">MicroPython y Arduino IDE</a></li>
@@ -403,6 +405,10 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cocket-nova-implementacion-de-i2c">Cocket Nova implementación de I2C</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-integracion">Ejemplo de Integración</a></li>
+</ul>
+
             </nav>
         </div>
     </div>
@@ -440,7 +446,7 @@ document.write(`
 </figure>
 <p>La pantalla OLED monocromática de 128x64 píxeles equipada con un controlador SSD1306 se conecta mediante un conector JST de 1.25mm de 4 pines. La siguiente tabla proporciona los detalles de conexión para la pantalla.</p>
 <div class="pst-scrollable-table-container"><table class="table table-center" id="id3">
-<caption><span class="caption-number">Tabla 5 </span><span class="caption-text">Asignación de Pines de la Pantalla SSD1306</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<caption><span class="caption-number">Tabla 7 </span><span class="caption-text">Asignación de Pines de la Pantalla SSD1306</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 50.0%" />
 <col style="width: 50.0%" />
@@ -593,6 +599,84 @@ document.write(`
 </figure>
 </section>
 </section>
+<section id="ejemplo-de-integracion">
+<h1>Ejemplo de Integración<a class="headerlink" href="#ejemplo-de-integracion" title="Link to this heading">#</a></h1>
+<p>Este ejemplo demuestra cómo integrar el Cargador Boost LiPo &amp; Monitor I2C de UNIT con un ESP32 y mostrar el estado de la batería en una pantalla OLED.</p>
+<div class="admonition caution">
+<p class="admonition-title">Prudencia</p>
+<p>Dado que el estándar Qwiic opera a 3.3V, se recomienda usar un regulador de voltaje después de la salida JST del módulo para reducir VSYS a 3.3V y proteger los dispositivos Qwiic conectados.</p>
+</div>
+<p>Pasos para integrar el <a class="reference external" href="https://github.com/UNIT-Electronics/MAX1704X_lib/blob/main/Software/MicroPython/example/max1704x.py">Cargador Boost LiPo &amp; Monitor I2C</a> de UNIT con el ESP32 y la pantalla OLED usando el conector JST y la comunicación I2C:</p>
+<ol class="arabic simple">
+<li><p><strong>Conectar el Conector JST</strong>: Conecta el conector JST a la placa DualMCU usando el  <a class="reference external" href="https://uelectronics.com/producto/conectores-sh1-0mm-con-cable-28-awg-15cm/">conector JST SH de 1.0mm y 4 pines</a>.</p></li>
+<li><p><strong>Conectar el ESP32</strong>: Conecta el ESP32 a la placa DualMCU mediante el protocolo de comunicación I2C.</p></li>
+</ol>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="_images/qwiic.png"><img alt="ESP32" src="_images/qwiic.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 18 </span><span class="caption-text">Conector JST SH de 1.0mm y 4 pines conectado al ESP32.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple" start="3">
+<li><p><strong>Soldar la Configuración de Pines de la Batería</strong>: Suelda las configuración apropiada para el cargador de batería. Configura la corriente de carga (0.2 mA) según las especificaciones de la batería.</p></li>
+</ol>
+<figure class="align-center" id="id7">
+<a class="reference internal image-reference" href="_images/back.png"><img alt="Panel trasero" src="_images/back.png" style="width: 40%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 19 </span><span class="caption-text">Configuración de Pines de la Batería</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">Advertencia</p>
+<p>Asegúrate de verificar la polaridad de la batería antes de conectarla al cargador.</p>
+</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>Conectar la Pantalla OLED</strong>: Conecta la pantalla OLED al ESP32 usando el protocolo de comunicación I2C.</p></li>
+<li><p><strong>Subir el Código al ESP32</strong>: Copia el siguiente código al ESP32 y ejecútalo usando Thonny:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">machine</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">ocks</span> <span class="kn">import</span> <span class="n">SSD1306_I2C</span>
+<span class="kn">from</span> <span class="nn">max1704x</span> <span class="kn">import</span> <span class="n">max1704x</span>
+
+<span class="n">i2c</span> <span class="o">=</span> <span class="n">machine</span><span class="o">.</span><span class="n">SoftI2C</span><span class="p">(</span><span class="n">sda</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">21</span><span class="p">),</span> <span class="n">scl</span><span class="o">=</span><span class="n">machine</span><span class="o">.</span><span class="n">Pin</span><span class="p">(</span><span class="mi">22</span><span class="p">))</span>
+<span class="n">oled</span> <span class="o">=</span> <span class="n">SSD1306_I2C</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">i2c</span><span class="p">)</span>
+
+<span class="n">my_sensor</span> <span class="o">=</span> <span class="n">max1704x</span><span class="p">(</span><span class="n">sda_pin</span><span class="o">=</span><span class="mi">21</span><span class="p">,</span> <span class="n">scl_pin</span><span class="o">=</span><span class="mi">22</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">update_display</span><span class="p">():</span>
+  <span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s1">&#39;UNIT Max&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+  <span class="n">vcell</span> <span class="o">=</span> <span class="n">my_sensor</span><span class="o">.</span><span class="n">getVCell</span><span class="p">()</span>
+  <span class="n">soc</span> <span class="o">=</span> <span class="n">my_sensor</span><span class="o">.</span><span class="n">getSoc</span><span class="p">()</span>
+  <span class="n">compensate_value</span> <span class="o">=</span> <span class="n">my_sensor</span><span class="o">.</span><span class="n">getCompensateValue</span><span class="p">()</span>
+  <span class="n">alert_threshold</span> <span class="o">=</span> <span class="n">my_sensor</span><span class="o">.</span><span class="n">getAlertThreshold</span><span class="p">()</span>
+  <span class="n">in_alert</span> <span class="o">=</span> <span class="n">my_sensor</span><span class="o">.</span><span class="n">inAlert</span><span class="p">()</span>
+
+  <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Voltaje: </span><span class="si">{:.2f}</span><span class="s2">V&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vcell</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+  <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;SOC: </span><span class="si">{:.1f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">soc</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+  <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Comp: </span><span class="si">{:.1f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">compensate_value</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">)</span>
+  <span class="n">oled</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Alerta: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;Sí&quot;</span> <span class="k">if</span> <span class="n">in_alert</span> <span class="k">else</span> <span class="s2">&quot;No&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">46</span><span class="p">)</span>
+
+  <span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+  <span class="n">update_display</span><span class="p">()</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p><strong>Monitorear el Estado de la Batería</strong>: La pantalla OLED mostrará el estado de la batería, incluyendo el voltaje, estado de carga, valor de compensación y estado de alerta.</p></li>
+<li><p><strong>Cargar la Batería</strong>: Conecta la batería al cargador y monitorea el estado de carga usando la pantalla OLED.</p></li>
+</ol>
+<figure class="align-center" id="id8">
+<a class="reference internal image-reference" href="_images/example1.jpg"><img alt="Ejemplo de Integración" src="_images/example1.jpg" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Figura 20 </span><span class="caption-text">Ejemplo de Integración del Cargador Boost LiPo &amp; Monitor I2C de UNIT con ESP32 y Pantalla OLED.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
 
 
                 </article>
@@ -639,6 +723,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">I2C (Inter-Integrated Circuit)</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-general-del-i2c">Descripción General del I2C</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-aplicacion-pantalla-ssd1306">Ejemplo de aplicación Pantalla SSD1306</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#micropython-y-arduino-ide">MicroPython y Arduino IDE</a></li>
@@ -646,6 +731,10 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cocket-nova-implementacion-de-i2c">Cocket Nova implementación de I2C</a></li>
 </ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-de-integracion">Ejemplo de Integración</a></li>
+</ul>
+
   </nav></div>
 
 </div></div>
