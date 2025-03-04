@@ -39,8 +39,7 @@ A continuación, se muestra la tabla de asignación de pines para las conexiones
 DualMCU ONE RP2040 y ESP32
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-La placa de desarrollo DualMCU ONE está equipada con dos microcontroladores, el ESP32 y el RP2040. Ambos microcontroladores ofrecen soporte para la comunicación SPI, lo que te permite conectar dispositivos SPI a la placa de desarrollo.
-
+La DualMCU ONE cuenta con interconexiones SPI cruzadas entre los microcontroladores ESP32 y RP2040. Esto significa que el RP2040 actúa como maestro y el ESP32 como esclavo. La tabla a continuación detalla la configuración de los pines GPIO para la comunicación SPI cruzada entre el ESP32 y el RP2040.
 
 .. list-table:: Configuración SPI cruzado entre ESP32 y RP2040
   :widths: 20 20 20 20
