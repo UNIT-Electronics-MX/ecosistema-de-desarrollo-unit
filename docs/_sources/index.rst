@@ -1,8 +1,7 @@
- UNIT DevLab desde cero
- =============================
+UNIT DevLab desde cero
+=======================
 
-
- UNIT DevLab desde cero. Presenta el ecosistema de desarrollo de UNIT Electronics el cual está diseñado para ofrecer el mayor soporte posible en aplicaciones específicas dentro del desarrollo tecnológico. Actualmente, la línea de productos incluye la familia DualMCU y la Cocket Nova, con la expectativa de expandirse hacia nuevas tecnologías en el futuro. 
+UNIT DevLab desde cero. Presenta el ecosistema de desarrollo de UNIT Electronics el cual está diseñado para ofrecer el mayor soporte posible en aplicaciones específicas dentro del desarrollo tecnológico. Actualmente, la línea de productos incluye la familia DualMCU y la Cocket Nova, con la expectativa de expandirse hacia nuevas tecnologías en el futuro. 
 
 .. toctree::
   :maxdepth: 2
