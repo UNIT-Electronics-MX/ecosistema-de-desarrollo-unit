@@ -11,7 +11,7 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('.'))
 
-project = 'Introducción al Ecosistema de Desarrollo UNIT '
+project = 'UNIT DevLab desde cero'
 copyright = '2025, Unit Electronics'
 author = 'Cesar Bautista'
 release = '0.0.1'
